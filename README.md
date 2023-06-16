@@ -1,16 +1,6 @@
-# pengajuan_dana
+Aplikasi Pengajuan Dana KMTI ke Prodi Teknologi Informasi
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  Aplikasi pengajuan KMTI ke Prodi TI adalah sebuah platform yang dirancang untuk memfasilitasi proses pengajuan dan pengelolaan kegiatan atau acara yang dilakukan oleh KMTI kepada Prodi TI. Aplikasi ini bertujuan untuk menyederhanakan dan mempercepat proses pengajuan serta memastikan transparansi dan efisiensi dalam penanganan permohonan.
+  Dalam aplikasi ini, KMTI dapat mengajukan proposal kegiatan atau acara yang ingin diadakan kepada Prodi. Proposal tersebut dapat mencakup berbagai aspek seperti tujuan kegiatan, rencana pelaksanaan, serta anggaran yang dibutuhkan. Aplikasi ini menyediakan formulir online yang lengkap dengan semua informasi yang diperlukan untuk pengajuan, termasuk pengunggahan proposal.
+  Setelah pengajuan diajukan, Prodi TI dapat meninjau proposal tersebut dan memberikan keputusan mengenai permohonan yang diajukan.
+Dengan adanya aplikasi pengajuan KMTI ke Prodi TI, proses administrasi dan komunikasi antara KMTI dan Prodi TI dapat dilakukan secara efisien dan terdokumentasi dengan baik. Hal ini akan membantu mempercepat proses persetujuan, meminimalisir kehilangan informasi, serta meningkatkan transparansi dan akuntabilitas dalam hubungan antara KMTI dan Prodi TI.
