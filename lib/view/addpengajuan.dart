@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:pengajuan_dana/view/list.dart';
 
 class AddPengajuan extends StatelessWidget {
   const AddPengajuan({super.key});
@@ -48,6 +49,13 @@ class AddPengajuan extends StatelessWidget {
               onChanged: (value) {
                 dana = value;
               },
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ListPengajuan()));
+              },
+              child: const Text('Tambah Pengajuan'),
             ),
           ]),
         ));
