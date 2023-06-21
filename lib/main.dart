@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/view/cobalogin.dart';
 import 'package:pengajuan_dana/view/list.dart';
 import 'package:pengajuan_dana/view/login.dart';
+import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/splashscreen.dart';
 
 Future main() async {
