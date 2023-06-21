@@ -3,6 +3,7 @@ import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
 import 'package:pengajuan_dana/view/SplashScreen.dart';
 import 'package:pengajuan_dana/view/list.dart';
+import 'package:pengajuan_dana/view/register.dart';
 
 class Login2 extends StatelessWidget {
   Login2({super.key});
@@ -151,12 +152,12 @@ class Login2 extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SplashScreenn(),
+                              builder: (context) => Register(),
                             ),
                           );
                         },
                         child: const Text(
-                          "Sign Up",
+                          "Register",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),

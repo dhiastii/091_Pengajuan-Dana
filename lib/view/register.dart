@@ -4,14 +4,14 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/view/cobalogin.dart';
 
-class CobaPage extends StatefulWidget {
-  const CobaPage({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<CobaPage> createState() => _CobaPageState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _CobaPageState extends State<CobaPage> {
+class _RegisterState extends State<Register> {
   final formkey = GlobalKey<FormState>();
   final authCtrl = AuthController();
 
@@ -20,7 +20,6 @@ class _CobaPageState extends State<CobaPage> {
     String? nama;
     String? nim;
     String? nohp;
-    String? jabatan;
     String? divisi;
     String? email;
     String? password;
@@ -49,12 +48,6 @@ class _CobaPageState extends State<CobaPage> {
                   decoration: const InputDecoration(hintText: 'No Hp'),
                   onChanged: (value) {
                     nohp = value;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Jabatan'),
-                  onChanged: (value) {
-                    jabatan = value;
                   },
                 ),
                 TextFormField(
@@ -151,7 +144,30 @@ class _CobaPageState extends State<CobaPage> {
                     // }
                   },
                   child: const Text('Register'),
-                )
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Already have an account",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Login2(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
