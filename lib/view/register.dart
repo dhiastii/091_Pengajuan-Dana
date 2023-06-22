@@ -35,7 +35,23 @@ class _RegisterState extends State<Register> {
               height: 150,
             )),
         Positioned(
-          top: 200,
+          top: 120,
+          left: 170,
+          child: Text(
+            'Register',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color.fromRGBO(0, 0, 0, 1),
+              fontFamily: 'Arsenal',
+              fontSize: 24,
+              letterSpacing: 0,
+              fontWeight: FontWeight.normal,
+              height: 1,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 150,
           left: 50,
           right: 50,
           child: Form(
