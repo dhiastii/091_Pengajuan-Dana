@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:pengajuan_dana/view/editpengajuan.dart';
 import 'package:pengajuan_dana/view/list.dart';
 
 class AddPengajuan extends StatelessWidget {
@@ -53,7 +54,7 @@ class AddPengajuan extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ListPengajuan()));
+                    MaterialPageRoute(builder: (context) => EditPengajuan()));
               },
               child: const Text('Tambah Pengajuan'),
             ),

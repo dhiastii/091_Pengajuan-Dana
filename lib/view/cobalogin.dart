@@ -18,23 +18,31 @@ class Login2 extends StatelessWidget {
     String? password;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/logoatas.jpg',
-              width: 150,
-              height: 150,
-            ),
-          ],
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   centerTitle: true,
+      //   title: Row(
+      //     children: [
+      //       Image.asset(
+      //         'assets/images/logoatas.jpg',
+      //         width: 150,
+      //         height: 150,
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: 30,
+              top: 1,
+              left: 130,
+              child: Image.asset(
+                'assets/images/logoatas.jpg',
+                width: 150,
+                height: 150,
+              )),
+          Positioned(
+            top: 120,
             left: 170,
             child: Text(
               'Login',
@@ -50,7 +58,7 @@ class Login2 extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 160,
+            top: 200,
             left: 50,
             right: 50,
             child: Form(

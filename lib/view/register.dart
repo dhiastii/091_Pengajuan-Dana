@@ -25,9 +25,19 @@ class _RegisterState extends State<Register> {
     String? password;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
+      body: Stack(children: <Widget>[
+        Positioned(
+            top: 1,
+            left: 130,
+            child: Image.asset(
+              'assets/images/logoatas.jpg',
+              width: 150,
+              height: 150,
+            )),
+        Positioned(
+          top: 200,
+          left: 50,
+          right: 50,
           child: Form(
             key: formkey,
             child: Column(
@@ -172,7 +182,7 @@ class _RegisterState extends State<Register> {
             ),
           ),
         ),
-      ),
+      ]),
     );
   }
 }
