@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/view/cobalogin.dart';
+import 'package:pengajuan_dana/view/list.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -111,8 +112,10 @@ class _RegisterState extends State<Register> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Login2()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ListPengajuan()));
                     // if (formkey.currentState!.validate()) {
                     //   UserModel? registeredUser =
                     //       await authCtrl.registerWithEmailAndPassword(
