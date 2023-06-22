@@ -33,7 +33,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
           )),
       Positioned(
         top: 120,
-        left: 65,
+        left: 85,
         child: Text(
           'Edit Pengajuan Dana',
           textAlign: TextAlign.center,
