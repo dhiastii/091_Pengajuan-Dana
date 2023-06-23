@@ -16,17 +16,16 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final formkey = GlobalKey<FormState>();
   final authCtrl = AuthController();
+  String? nama;
+  String? nim;
+  String? nohp;
+  String? divisi;
+  String? email;
+  String? password;
+  String role = 'K';
 
   @override
   Widget build(BuildContext context) {
-    String? nama;
-    String? nim;
-    String? nohp;
-    String? divisi;
-    String? email;
-    String? password;
-    String role = 'K';
-
     return Scaffold(
       body: Stack(children: <Widget>[
         Positioned(

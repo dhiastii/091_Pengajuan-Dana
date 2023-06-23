@@ -11,13 +11,12 @@ class Login2 extends StatelessWidget {
   final formkey = GlobalKey<FormState>();
 
   final authCr = AuthController();
+  String? email;
+
+  String? password;
 
   @override
   Widget build(BuildContext context) {
-    String? email;
-
-    String? password;
-
     return Scaffold(
         // appBar: AppBar(
         //   backgroundColor: Colors.white,

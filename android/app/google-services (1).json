@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "129856928175",
+    "project_id": "pengajuandana-60e94",
+    "storage_bucket": "pengajuandana-60e94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129856928175:android:b32163c264418888f6575a",
+        "android_client_info": {
+          "package_name": "com.company.pengajuan_dana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129856928175-nu82io3fpf6lf8p8e36c818optcf5qh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPeNGf-NeYf9Y7vkyo5wR2VN1dj6ZURak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129856928175-nu82io3fpf6lf8p8e36c818optcf5qh1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

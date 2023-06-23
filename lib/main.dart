@@ -6,8 +6,8 @@ import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/splashscreen.dart';
 
 Future main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(); //buat setup firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); //buat setup firebase
   runApp(const MyApp());
 }
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: ListPengajuan());
+        home: SplashScreenn());
   }
 }
 
