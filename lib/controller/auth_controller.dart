@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,5 +7,71 @@ class AuthController {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  bool isLoggedIn = false;
+  bool get succes => false;
+
+  Future<UserModel?> registeremailPassword(String nama, String nim, String nohp,
+      String divisi, String email, String password, String role) async {
+    try {
+      final UserCredential userCredential = await auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        final UserModel newUser = UserModel(
+            Uid: user.uid,
+            nama: nama,
+            nim: nim,
+            nohp: nohp,
+            divisi: divisi,
+            email: email,
+            password: password,
+            role: role);
+
+        await userCollection.doc(newUser.Uid).set(newUser.toMap());
+
+        return newUser;
+      }
+    } catch (e) {
+      print('Error registering user: $e');
+    }
+  }
+
+  Future<UserModel?> signEmailandPassword(String email, String password) async {
+    try {
+      final UserCredential userCredential = await auth
+          .signInWithEmailAndPassword(email: email, password: password);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        final DocumentSnapshot snapshot =
+            await userCollection.doc(user.uid).get();
+
+        final UserModel currentUser = UserModel(
+          nama: snapshot['nama'] ?? '',
+          Uid: user.uid,
+          divisi: snapshot['divisi'] ?? '',
+          email: snapshot['email'] ?? '',
+          nim: snapshot['nim'] ?? '',
+          nohp: snapshot['nohp'] ?? '',
+          password: snapshot['password'] ?? '',
+          role: snapshot['role'],
+        );
+
+        return currentUser;
+      }
+    } catch (e) {
+      print('Error signing in: $e');
+    }
+
+    return null;
+  }
+
+  UserModel? getCurrentUser() {
+    final User? user = auth.currentUser;
+    if (user != null) {
+      return UserModel.fromFirebaseUser(user);
+    }
+    return null;
+  }
 }

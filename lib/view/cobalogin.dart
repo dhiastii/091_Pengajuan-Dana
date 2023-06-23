@@ -93,8 +93,8 @@ class Login2 extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   if (formkey.currentState!.validate()) {
-                    UserModel? registeredUser = await authCr
-                        .signInWithEmailAndPassword(email!, password!);
+                    UserModel? registeredUser =
+                        await authCr.signEmailandPassword(email!, password!);
 
                     if (registeredUser != null) {
                       // Registration successful

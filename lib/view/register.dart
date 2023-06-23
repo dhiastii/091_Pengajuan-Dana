@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
+import 'package:pengajuan_dana/model/user_model.dart';
 import 'package:pengajuan_dana/view/cobalogin.dart';
 import 'package:pengajuan_dana/view/list.dart';
 
@@ -24,6 +25,7 @@ class _RegisterState extends State<Register> {
     String? divisi;
     String? email;
     String? password;
+    String role = 'K';
 
     return Scaffold(
       body: Stack(children: <Widget>[
@@ -111,66 +113,63 @@ class _RegisterState extends State<Register> {
                   },
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ListPengajuan()));
-                    // if (formkey.currentState!.validate()) {
-                    //   UserModel? registeredUser =
-                    //       await authCtrl.registerWithEmailAndPassword(
-                    //     email!,
-                    //     password!,
-                    //     nama!,
-                    //   );
+                    if (formkey.currentState!.validate()) {
+                      UserModel? registeredUser =
+                          await authCtrl.registeremailPassword(email!,
+                              password!, nama!, divisi!, nim!, nohp!, role);
 
-                    //   if (registeredUser != null) {
-                    //     // Registration success
-                    //     showDialog(
-                    //       context: context,
-                    //       builder: (BuildContext context) {
-                    //         return AlertDialog(
-                    //           title: const Text('Registration Success'),
-                    //           content: const Text(
-                    //               'You have successfully registered'),
-                    //           actions: <Widget>[
-                    //             TextButton(
-                    //               onPressed: () {
-                    //                 print(registeredUser.nama);
-                    //                 Navigator.push(context,
-                    //                     MaterialPageRoute(builder: (context) {
-                    //                   return Login();
-                    //                 }));
-                    //                 // Navigate to the next screen or perform any desired action
-                    //               },
-                    //               child: const Text('OK'),
-                    //             ),
-                    //           ],
-                    //         );
-                    //       },
-                    //     );
-                    //   } else {
-                    //     // Registration failed
-                    //     showDialog(
-                    //       context: context,
-                    //       builder: (BuildContext context) {
-                    //         return AlertDialog(
-                    //           title: const Text('Registration Failed'),
-                    //           content: const Text(
-                    //               'Please check your email or password!'),
-                    //           actions: <Widget>[
-                    //             TextButton(
-                    //               onPressed: () {
-                    //                 Navigator.pop(context);
-                    //               },
-                    //               child: const Text('OK'),
-                    //             ),
-                    //           ],
-                    //         );
-                    //       },
-                    //     );
-                    //   }
-                    // }
+                      if (registeredUser != null) {
+                        // Registration success
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Registration Success'),
+                              content: const Text(
+                                  'You have successfully registered'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    print(registeredUser.nama);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return Login2();
+                                    }));
+                                    // Navigate to the next screen or perform any desired action
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        // Registration failed
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Registration Failed'),
+                              content: const Text(
+                                  'Please check your email or password!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
                   },
                   child: const Text('Register'),
                 ),
