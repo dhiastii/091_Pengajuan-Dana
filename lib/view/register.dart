@@ -137,7 +137,7 @@ class _RegisterState extends State<Register> {
                                     print(registeredUser.nama);
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return Login2();
+                                      return Login();
                                     }));
                                     // Navigate to the next screen or perform any desired action
                                   },
@@ -184,7 +184,7 @@ class _RegisterState extends State<Register> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Login2(),
+                            builder: (context) => Login(),
                           ),
                         );
                       },

@@ -69,7 +69,7 @@ class SplashScreenn extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Login2()),
+                      MaterialPageRoute(builder: (context) => Login()),
                     );
                   },
                   child: Text(

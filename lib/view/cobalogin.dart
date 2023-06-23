@@ -6,8 +6,9 @@ import 'package:pengajuan_dana/view/list.dart';
 import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
-class Login2 extends StatelessWidget {
-  Login2({super.key});
+class Login extends StatelessWidget {
+  Login({super.key});
+
   final formkey = GlobalKey<FormState>();
 
   final authCr = AuthController();
