@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:pengajuan_dana/view/keputusan.dart';
+import 'package:pengajuan_dana/view/list.dart';
 
 class ViewProdi extends StatefulWidget {
   const ViewProdi({super.key});
@@ -132,18 +132,28 @@ class _ViewProdiState extends State<ViewProdi> {
                 height: 1),
           )),
       Positioned(
-          top: 250,
-          left: 50,
-          right: 50,
-          child: Column(children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => KeputusanProdi()));
-              },
-              child: const Text('Register'),
+        top: 700,
+        left: 330,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListPengajuan()),
+            );
+          },
+          child: Container(
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(240),
+              image: DecorationImage(
+                image: AssetImage('assets/images/accept.png'),
+                fit: BoxFit.fitWidth,
+              ),
             ),
-          ]))
+          ),
+        ),
+      ),
     ]));
   }
 }
