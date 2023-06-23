@@ -1,4 +1,4 @@
-package com.example.pengajuan_dana
+package com.company.pengajuan_dana
 
 import io.flutter.embedding.android.FlutterActivity
 
