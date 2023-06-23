@@ -131,29 +131,6 @@ class _ViewProdiState extends State<ViewProdi> {
                 fontWeight: FontWeight.normal,
                 height: 1),
           )),
-      Positioned(
-        top: 700,
-        left: 330,
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ListPengajuan()),
-            );
-          },
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(240),
-              image: DecorationImage(
-                image: AssetImage('assets/images/accept.png'),
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-        ),
-      ),
     ]));
   }
 }
