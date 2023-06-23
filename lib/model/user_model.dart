@@ -106,4 +106,6 @@ class UserModel {
         password.hashCode ^
         role.hashCode;
   }
+
+  static UserModel? fromFirebaseUser(User user) {}
 }
