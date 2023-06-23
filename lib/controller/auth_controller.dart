@@ -1,5 +1,13 @@
-class AuthController {
-  registerWithEmailAndPassword(String s, String t, String u) {}
+import 'dart:convert';
+import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pengajuan_dana/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-  signInWithEmailAndPassword(String s, String t) {}
+class AuthController {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('users');
+
+  bool isLoggedIn = false;
 }
