@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/view/addpengajuan.dart';
+import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
 class ListPengajuan extends StatefulWidget {
   const ListPengajuan({super.key});
@@ -152,6 +153,29 @@ class _ListPengajuanState extends State<ListPengajuan> {
               borderRadius: BorderRadius.circular(240),
               image: DecorationImage(
                 image: AssetImage('assets/images/plus.png'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+        ),
+      ),
+      Positioned(
+        top: 700,
+        left: 30,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ViewProdi()),
+            );
+          },
+          child: Container(
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(240),
+              image: DecorationImage(
+                image: AssetImage('assets/images/pen.png'),
                 fit: BoxFit.fitWidth,
               ),
             ),

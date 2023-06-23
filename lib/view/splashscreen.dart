@@ -82,10 +82,6 @@ class SplashScreenn extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent,
-                    elevation: 0,
-                  ),
                 ),
               ),
             ),
