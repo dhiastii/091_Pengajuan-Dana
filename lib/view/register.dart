@@ -24,6 +24,8 @@ class _RegisterState extends State<Register> {
   String? password;
   String role = 'K';
 
+  bool eyeToogle = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,6 +111,13 @@ class _RegisterState extends State<Register> {
                   decoration: const InputDecoration(hintText: 'Password'),
                   onChanged: (value) {
                     password = value;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Password harus diisi";
+                    } else if (value.length < 6) {
+                      return "Password minimal berisi 6 karakter";
+                    }
                   },
                 ),
                 ElevatedButton(
