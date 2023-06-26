@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package=".pengajuan_dana">
+    package="com.company.pengajuan_dana">
    <application
         android:label="pengajuan_dana"
         android:name="${applicationName}"
