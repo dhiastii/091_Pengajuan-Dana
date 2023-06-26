@@ -6,32 +6,24 @@ import 'package:pengajuan_dana/view/list.dart';
 import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
+  final authctrl = AuthController();
 
-  final authCr = AuthController();
   String? email;
-
   String? password;
 
+  bool eyeToggle = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.white,
-        //   centerTitle: true,
-        //   title: Row(
-        //     children: [
-        //       Image.asset(
-        //         'assets/images/logoatas.jpg',
-        //         width: 150,
-        //         height: 150,
-        //       ),
-        //     ],
-        //   ),
-        // ),
         body: Stack(children: <Widget>[
       Positioned(
           top: 1,
@@ -94,7 +86,7 @@ class Login extends StatelessWidget {
                 onPressed: () async {
                   if (formkey.currentState!.validate()) {
                     UserModel? registeredUser =
-                        await authCr.signEmailandPassword(email!, password!);
+                        await authctrl.signEmailandPassword(email!, password!);
 
                     if (registeredUser != null) {
                       // Registration successful
