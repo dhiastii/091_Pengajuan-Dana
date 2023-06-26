@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 
 class AddPengajuan extends StatefulWidget {
   const AddPengajuan({Key? key});
@@ -17,6 +21,21 @@ class _AddPengajuanState extends State<AddPengajuan> {
   final TextEditingController _tanggalController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _danaController = TextEditingController();
+
+  late String _filePath;
+
+  Future<void> _selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null) {
+      setState(() {
+        _filePath = result.files.single.path!;
+      });
+    }
+  }
 
   Future<void> _tambahPengajuan() async {
     try {
@@ -38,6 +57,20 @@ class _AddPengajuanState extends State<AddPengajuan> {
 
       // Menyimpan data pengajuan ke Firestore
       await pengajuanRef.set(pengajuanData);
+
+      // Menyimpan file PDF ke Firebase Storage
+      if (_filePath.isNotEmpty) {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('pengajuan')
+            .child(pengajuanRef.id)
+            .child('proposal.pdf');
+
+        final fileData = File(_filePath);
+        final uploadTask = storageRef.putFile(fileData);
+
+        await uploadTask.whenComplete(() => null);
+      }
 
       // Menampilkan pesan sukses
       showDialog(
@@ -133,6 +166,10 @@ class _AddPengajuanState extends State<AddPengajuan> {
                 TextFormField(
                   controller: _danaController,
                   decoration: const InputDecoration(hintText: 'Pengajuan Dana'),
+                ),
+                ElevatedButton(
+                  onPressed: _selectFile,
+                  child: const Text('Upload Proposal'),
                 ),
                 ElevatedButton(
                   onPressed: _tambahPengajuan,
