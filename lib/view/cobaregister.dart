@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pengajuan_dana/view/cobalagilogin.dart';
+import 'package:pengajuan_dana/view/cobalogin.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -123,10 +123,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
-        'nama': _nameController.text.trim(),
-        'nim': _nimController.text.trim(),
-        'no hp': _phoneNumberController.text.trim(),
-        'divis': _divisionController.text.trim(),
         'email': _emailController.text.trim(),
         'password': _passwordController.text.trim(),
         'role': _roleController.text.trim()
@@ -146,7 +142,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   // Pindah ke halaman login setelah berhasil registrasi
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
               ),

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
@@ -27,208 +25,255 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 1,
-            left: 130,
-            child: Image.asset(
-              'assets/images/logoatas.jpg',
-              width: 150,
-              height: 150,
-            ),
+        body: Stack(children: <Widget>[
+      Positioned(
+        top: 1,
+        left: 130,
+        child: Image.asset(
+          'assets/images/logoatas.jpg',
+          width: 150,
+          height: 150,
+        ),
+      ),
+      Positioned(
+        top: 150,
+        left: 170,
+        child: Text(
+          'Login',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Color.fromRGBO(0, 0, 0, 1),
+            fontFamily: 'Arsenal',
+            fontSize: 24,
+            letterSpacing: 0,
+            fontWeight: FontWeight.normal,
+            height: 1,
           ),
-          Positioned(
-            top: 150,
-            left: 170,
-            child: Text(
-              'Login',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color.fromRGBO(0, 0, 0, 1),
-                fontFamily: 'Arsenal',
-                fontSize: 24,
-                letterSpacing: 0,
-                fontWeight: FontWeight.normal,
-                height: 1,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 200,
-            left: 50,
-            right: 50,
-            child: Form(
-              key: formkey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(hintText: 'Email'),
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    validator: (value) {
-                      bool valid = RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                          .hasMatch(value!);
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your email";
-                      }
-                      return null;
-                    },
+        ),
+      ),
+      Positioned(
+          top: 200,
+          left: 25,
+          right: 25,
+          child: Form(
+            key: formkey,
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey,
+                    hintText: 'Email Address',
+                    enabled: true,
+                    contentPadding: const EdgeInsets.only(
+                        left: 14.0, bottom: 8.0, top: 8.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.grey),
+                      borderRadius: new BorderRadius.circular(45),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.grey),
+                      borderRadius: new BorderRadius.circular(45),
+                    ),
                   ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(hintText: 'Password'),
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your password';
-                      }
+                  validator: (value) {
+                    if (value!.length == 0) {
+                      return "Email cannot be empty";
+                    }
+                    if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                        .hasMatch(value)) {
+                      return ("Please enter a valid email");
+                    } else {
                       return null;
-                    },
+                    }
+                  },
+                  onSaved: (value) {
+                    email = value!;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        icon: Icon(eyeToggle
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            eyeToggle = !eyeToggle;
+                          });
+                        }),
+                    filled: true,
+                    fillColor: Colors.grey,
+                    hintText: 'Password',
+                    enabled: true,
+                    contentPadding: const EdgeInsets.only(
+                        left: 14.0, bottom: 8.0, top: 15.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.grey),
+                      borderRadius: new BorderRadius.circular(45),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.grey),
+                      borderRadius: new BorderRadius.circular(45),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: InkWell(
-                      onTap: () async {
-                        if (formkey.currentState!.validate()) {
-                          UserModel? signUser = await authctrl
-                              .signEmailandPassword(email!, password!);
+                  validator: (value) {
+                    RegExp regex = new RegExp(r'^.{6,}$');
+                    if (value!.isEmpty) {
+                      return "Password cannot be empty";
+                    }
+                    if (!regex.hasMatch(value)) {
+                      return ("please enter valid password min. 6 character");
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (value) {
+                    password = value!;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: InkWell(
+                    onTap: () async {
+                      if (formkey.currentState!.validate()) {
+                        UserModel? signUser = await authctrl
+                            .signEmailandPassword(email!, password!);
 
-                          if (signUser != null && signUser.role == "P") {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Login Admin Successful'),
-                                  content: const Text(
-                                      'You have been successfully Logged in.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => ViewProdi(),
-                                          ),
-                                        );
-                                        print(signUser.email);
-                                        // Navigate to the next screen or perform any desired action
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else if (signUser != null && signUser.role == "K") {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Login Asisten Successful'),
-                                  content: const Text(
-                                      'You have been successfully Logged in.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ListPengajuan(),
-                                          ),
-                                        );
-                                        print(signUser.email);
-                                        // Navigate to the next screen or perform any desired action
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            // Login failed
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Login Failed'),
-                                  content: const Text(
-                                      'An error occurred during Login.'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Login(),
-                                          ),
-                                        );
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
+                        if (signUser != null && signUser.role == "P") {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Login Admin Successful'),
+                                content: const Text(
+                                    'You have been successfully Logged in.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ViewProdi(),
+                                        ),
+                                      );
+                                      print(signUser.email);
+                                      // Navigate to the next screen or perform any desired action
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else if (signUser != null && signUser.role == "K") {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Login Asisten Successful'),
+                                content: const Text(
+                                    'You have been successfully Logged in.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ListPengajuan(),
+                                        ),
+                                      );
+                                      print(signUser.email);
+                                      // Navigate to the next screen or perform any desired action
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          // Login failed
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Login Failed'),
+                                content: const Text('Data tidak valid!'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Login(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(45)),
-                        child: Center(
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
+                      }
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(45)),
+                      child: Center(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account? ",
-                            style: TextStyle(color: Colors.grey),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account? ",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
+                          },
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(color: Colors.blueAccent),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Register()));
-                            },
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(color: Colors.blueAccent),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+          ))
+    ]));
   }
 }

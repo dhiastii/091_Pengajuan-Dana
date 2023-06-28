@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/view/cobalogin.dart';
+import 'package:pengajuan_dana/view/cobaregister.dart';
 import 'package:pengajuan_dana/view/list.dart';
 import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/splashscreen.dart';
