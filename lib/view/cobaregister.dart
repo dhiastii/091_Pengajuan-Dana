@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pengajuan_dana/view/cobalogin.dart';
+import 'package:pengajuan_dana/view/login.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override

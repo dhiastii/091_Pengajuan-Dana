@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
-import 'package:pengajuan_dana/view/cobalogin.dart';
+import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/list.dart';
 
 class Register extends StatefulWidget {

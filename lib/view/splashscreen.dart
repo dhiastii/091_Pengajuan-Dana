@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pengajuan_dana/view/cobalogin.dart';
+import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/register.dart';
 
 class SplashScreenn extends StatelessWidget {
