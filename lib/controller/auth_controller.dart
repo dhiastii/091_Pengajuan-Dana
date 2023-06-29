@@ -9,7 +9,7 @@ class AuthController {
 
   bool get succes => false;
 
-  Future<UserModel?> registeremailPassword(String nama, String nim, String nohp,
+  Future<UserModel?> registrasi(String nama, String nim, String nohp,
       String divisi, String email, String password, String role) async {
     try {
       final UserCredential userCredential = await auth
@@ -19,16 +19,16 @@ class AuthController {
 
       if (user != null) {
         final UserModel newUser = UserModel(
-            Uid: user.uid,
+            uid: user.uid,
             nama: nama,
             nim: nim,
             nohp: nohp,
             divisi: divisi,
-            email: email,
+            email: user.email ?? '',
             password: password,
             role: role);
 
-        await userCollection.doc(newUser.Uid).set(newUser.toMap());
+        await userCollection.doc(newUser.uid).set(newUser.toMap());
 
         return newUser;
       }
@@ -37,7 +37,7 @@ class AuthController {
     }
   }
 
-  Future<UserModel?> signEmailandPassword(String email, String password) async {
+  Future<UserModel?> login(String email, String password) async {
     try {
       final UserCredential userCredential = await auth
           .signInWithEmailAndPassword(email: email, password: password);
@@ -48,20 +48,19 @@ class AuthController {
             await userCollection.doc(user.uid).get();
 
         final UserModel currentUser = UserModel(
-          nama: snapshot['nama'] ?? '',
-          Uid: user.uid,
-          divisi: snapshot['divisi'] ?? '',
-          email: snapshot['email'] ?? '',
-          nim: snapshot['nim'] ?? '',
-          nohp: snapshot['nohp'] ?? '',
-          password: snapshot['password'] ?? '',
-          role: snapshot['role'],
-        );
+            nama: snapshot['nama'] ?? '',
+            uid: user.uid,
+            divisi: snapshot['divisi'] ?? '',
+            email: snapshot['email'] ?? '',
+            nim: snapshot['nim'] ?? '',
+            nohp: snapshot['nohp'] ?? '',
+            password: snapshot['password'] ?? '',
+            role: snapshot['role']);
 
         return currentUser;
       }
     } catch (e) {
-      print('Error signing in: $e');
+      print('Error login in: $e');
     }
 
     return null;
@@ -73,5 +72,9 @@ class AuthController {
       return UserModel.fromFirebaseUser(user);
     }
     return null;
+  }
+
+  Future<void> signOut() async {
+    await auth.signOut();
   }
 }

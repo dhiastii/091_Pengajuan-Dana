@@ -11,10 +11,10 @@ class ListController {
   Stream<List<DocumentSnapshot>> get stream => streamController.stream;
 
   //add contact
-  Future addContact(ListModel lsmodel) async {
+  Future addList(ListModel lsmodel) async {
     //convert ContactModel ke map buat dihandle firestore sebagai json type
     final list = lsmodel.toMap();
-    //add contact ke collection dan get document reference
+    //add contasct ke collection dan get document reference
     final DocumentReference docRef = await listCollection.add(list);
     //get document id buat contact yang baru ditambah
     final String docId = docRef.id;
@@ -29,7 +29,7 @@ class ListController {
     await docRef.update(listModel.toMap());
   }
 
-  Future<void> updateContact(ListModel lsmodel) async {
+  Future<void> updateList(ListModel lsmodel) async {
     final ListModel listModel = ListModel(
         id: lsmodel.id,
         namak: lsmodel.namak,

@@ -87,10 +87,9 @@ class _LoginState extends State<Login> {
                       return null;
                     }
                   },
-                  onSaved: (value) {
-                    email = value!;
+                  onChanged: (value) {
+                    email = value;
                   },
-                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: 20,
@@ -132,10 +131,9 @@ class _LoginState extends State<Login> {
                       return null;
                     }
                   },
-                  onSaved: (value) {
-                    password = value!;
+                  onChanged: (value) {
+                    password = value;
                   },
-                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: 20,
@@ -145,15 +143,15 @@ class _LoginState extends State<Login> {
                   child: InkWell(
                     onTap: () async {
                       if (formkey.currentState!.validate()) {
-                        UserModel? signUser = await authctrl
-                            .signEmailandPassword(email!, password!);
+                        UserModel? signUser =
+                            await authctrl.login(email!, password!);
 
                         if (signUser != null && signUser.role == "P") {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Login Admin Successful'),
+                                title: const Text('Login Prodi Successful'),
                                 content: const Text(
                                     'You have been successfully Logged in.'),
                                 actions: <Widget>[
@@ -179,7 +177,7 @@ class _LoginState extends State<Login> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Login Asisten Successful'),
+                                title: const Text('Login KMTI Successful'),
                                 content: const Text(
                                     'You have been successfully Logged in.'),
                                 actions: <Widget>[
@@ -263,7 +261,7 @@ class _LoginState extends State<Login> {
                                     builder: (context) => Register()));
                           },
                           child: Text(
-                            "Sign Up",
+                            "Register",
                             style: TextStyle(color: Colors.blueAccent),
                           ),
                         ),

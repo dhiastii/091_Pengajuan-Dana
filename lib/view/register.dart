@@ -115,6 +115,7 @@ class _RegisterState extends State<Register> {
                 ),
                 TextFormField(
                   obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: const InputDecoration(hintText: 'Password'),
                   onChanged: (value) {
                     password = value;
@@ -132,9 +133,8 @@ class _RegisterState extends State<Register> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Login()));
                     if (formkey.currentState!.validate()) {
-                      UserModel? registeredUser =
-                          await authCtrl.registeremailPassword(email!,
-                              password!, nama!, divisi!, nim!, nohp!, role);
+                      UserModel? registeredUser = await authCtrl.registrasi(
+                          email!, password!, nama!, divisi!, nim!, nohp!, role);
 
                       if (registeredUser != null) {
                         // Registration success
