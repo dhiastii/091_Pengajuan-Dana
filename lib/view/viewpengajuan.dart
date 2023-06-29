@@ -1,142 +1,196 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:pengajuan_dana/view/keputusan.dart';
+import 'package:pengajuan_dana/view/addpengajuan.dart';
+import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
 class ViewProdi extends StatefulWidget {
-  const ViewProdi({super.key});
+  const ViewProdi({Key? key}) : super(key: key);
 
   @override
-  State<ViewProdi> createState() => _ViewProdiState();
+  _ViewProdiState createState() => _ViewProdiState();
 }
 
 class _ViewProdiState extends State<ViewProdi> {
+  late List<Map<String, dynamic>> pengajuanList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    try {
+      final snapshot =
+          await FirebaseFirestore.instance.collection('pengajuan').get();
+
+      final List<Map<String, dynamic>> data = snapshot.docs.map((doc) {
+        final Map<String, dynamic> docData = doc.data() as Map<String, dynamic>;
+        return {
+          'namak': docData['namak'],
+          'tgl': docData['tgl'],
+          'desk': docData['desk'],
+          'dana': docData['dana'],
+        };
+      }).toList();
+
+      setState(() {
+        pengajuanList = data;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Figma Flutter Generator DaftarpengajuanWidget - FRAME
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        Positioned(
+      body: Stack(
+        children: <Widget>[
+          Positioned(
             top: 1,
             left: 130,
             child: Image.asset(
               'assets/images/logoatas.jpg',
               width: 150,
               height: 150,
-            )),
-        Positioned(
-          top: 120,
-          left: 85,
-          child: Text(
-            'Daftar Pengajuan Dana',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color.fromRGBO(0, 0, 0, 1),
-              fontFamily: 'Arsenal',
-              fontSize: 24,
-              letterSpacing: 0,
-              fontWeight: FontWeight.normal,
-              height: 1,
             ),
           ),
-        ),
-        Positioned(
+          Positioned(
+            top: 120,
+            left: 75,
+            child: Text(
+              'Daftar Pengajuan Dana',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromRGBO(0, 0, 0, 1),
+                fontFamily: 'Arsenal',
+                fontSize: 24,
+                letterSpacing: 0,
+                fontWeight: FontWeight.normal,
+                height: 1,
+              ),
+            ),
+          ),
+          Positioned(
             top: 160,
             left: 27,
             child: Container(
-                width: 337,
-                height: 116,
+              width: 337,
+              height: 400,
+              child: ListView.builder(
+                itemCount: pengajuanList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var pengajuan = pengajuanList[index];
+                  var namaKegiatan = pengajuan['namak'];
+                  var tanggalKegiatan = pengajuan['tgl'];
+                  var deskripsiKegiatan = pengajuan['desk'];
+                  var pengajuanDana = pengajuan['dana'];
+
+                  return Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromRGBO(59, 133, 199, 1),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Nama Kegiatan: $namaKegiatan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Arsenal',
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Text(
+                            'Tanggal Kegiatan: $tanggalKegiatan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Arsenal',
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Text(
+                            'Deskripsi Kegiatan: $deskripsiKegiatan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Arsenal',
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Text(
+                            'Pengajuan Dana: $pengajuanDana',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Arsenal',
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            top: 700,
+            left: 330,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddPengajuan()),
+                );
+              },
+              child: Container(
+                width: 45,
+                height: 45,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+                  borderRadius: BorderRadius.circular(240),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/plus.png'),
+                    fit: BoxFit.fitWidth,
                   ),
-                  color: Color.fromRGBO(59, 133, 199, 1),
-                ))),
-        Positioned(
-            top: 170,
-            left: 30,
-            child: Text(
-              'Nama Kegiatan    : ',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                  fontFamily: 'Arsenal',
-                  fontSize: 16,
-                  letterSpacing:
-                      0 /*percentages not used in flutter. defaulting to zero*/,
-                  fontWeight: FontWeight.normal,
-                  height: 1),
-            )),
-        Positioned(
-            top: 195,
-            left: 29,
-            child: Text(
-              'Tanggal Kegiatan : ',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                  fontFamily: 'Arsenal',
-                  fontSize: 16,
-                  letterSpacing:
-                      0 /*percentages not used in flutter. defaulting to zero*/,
-                  fontWeight: FontWeight.normal,
-                  height: 1),
-            )),
-        Positioned(
-            top: 220,
-            left: 32,
-            child: Text(
-              'Pengajuan Dana  :',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color.fromRGBO(255, 255, 255, 1),
-                  fontFamily: 'Arsenal',
-                  fontSize: 16,
-                  letterSpacing:
-                      0 /*percentages not used in flutter. defaulting to zero*/,
-                  fontWeight: FontWeight.normal,
-                  height: 1),
-            )),
-        Positioned(
-            top: 245,
-            left: 31,
-            child: Container(
-                width: 83,
-                height: 19,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(45),
-                    topRight: Radius.circular(45),
-                    bottomLeft: Radius.circular(45),
-                    bottomRight: Radius.circular(45),
-                  ),
-                  color: Color.fromRGBO(5, 255, 0, 1),
                 ),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Keputusan()),
-                      );
-                    },
-                    child: Text(
-                      'Disetujui',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          fontFamily: 'Arsenal',
-                          fontSize: 15,
-                          letterSpacing:
-                              0 /*percentages not used in flutter. defaulting to zero*/,
-                          fontWeight: FontWeight.normal,
-                          height: 1),
-                    )))),
-      ],
-    ));
+              ),
+            ),
+          ),
+          Positioned(
+            top: 700,
+            left: 30,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ViewProdi()),
+                );
+              },
+              child: Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(240),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/pen.png'),
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
