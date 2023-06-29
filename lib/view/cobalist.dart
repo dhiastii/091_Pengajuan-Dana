@@ -27,10 +27,10 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
       final List<Map<String, dynamic>> data = snapshot.docs.map((doc) {
         final Map<String, dynamic> docData = doc.data() as Map<String, dynamic>;
         return {
-          'nama_kegiatan': docData['nama_kegiatan'],
-          'tanggal_kegiatan': docData['tanggal_kegiatan'],
-          'deskripsi_kegiatan': docData['deskripsi_kegiatan'],
-          'pengajuan_dana': docData['pengajuan_dana'],
+          'namak': docData['namak'],
+          'tgl': docData['tgl'],
+          'desk': docData['desk'],
+          'dana': docData['dana'],
         };
       }).toList();
 
@@ -82,10 +82,10 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                 itemCount: pengajuanList.length,
                 itemBuilder: (BuildContext context, int index) {
                   var pengajuan = pengajuanList[index];
-                  var namaKegiatan = pengajuan['nama_kegiatan'];
-                  var tanggalKegiatan = pengajuan['tanggal_kegiatan'];
-                  var deskripsiKegiatan = pengajuan['deksripsi_kegiatan'];
-                  var pengajuanDana = pengajuan['pengajuan_dana'];
+                  var namaKegiatan = pengajuan['namak'];
+                  var tanggalKegiatan = pengajuan['tgl'];
+                  var deskripsiKegiatan = pengajuan['desk'];
+                  var pengajuanDana = pengajuan['dana'];
 
                   return Padding(
                     padding: EdgeInsets.all(8.0),

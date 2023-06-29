@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/view/keputusan.dart';
-import 'package:pengajuan_dana/view/list.dart';
 
 class ViewProdi extends StatefulWidget {
   const ViewProdi({super.key});

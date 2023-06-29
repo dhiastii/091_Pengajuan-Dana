@@ -74,59 +74,64 @@ class _AddPengajuanState extends State<AddPengajuan> {
             top: 180,
             left: 30,
             right: 50,
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Nama Kegiatan'),
-                  onChanged: (value) {
-                    namak = value;
-                  },
-                ),
-                TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Tanggal Kegiatan'),
-                  onChanged: (value) {
-                    tgl = value;
-                  },
-                ),
-                TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Deskripsi Kegiatan'),
-                  onChanged: (value) {
-                    desk = value;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: 'Pengajuan Dana'),
-                  onChanged: (value) {
-                    dana = value;
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: _selectFile,
-                  child: const Text('Upload Proposal'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (formkey.currentState!.validate()) {
-                      ListModel cm = ListModel(
-                          namak: namak!, tgl: tgl!, desk: desk!, dana: dana!);
-                      listController.addList(cm);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Proposal Added')));
+            child: Form(
+              key: formkey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(hintText: 'Nama Kegiatan'),
+                    onChanged: (value) {
+                      namak = value;
+                    },
+                  ),
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(hintText: 'Tanggal Kegiatan'),
+                    onChanged: (value) {
+                      tgl = value;
+                    },
+                  ),
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(hintText: 'Deskripsi Kegiatan'),
+                    onChanged: (value) {
+                      desk = value;
+                    },
+                  ),
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(hintText: 'Pengajuan Dana'),
+                    onChanged: (value) {
+                      dana = value;
+                    },
+                  ),
+                  // ElevatedButton(
+                  //   onPressed: _selectFile,
+                  //   child: const Text('Upload Proposal'),
+                  // ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (formkey.currentState!.validate()) {
+                        ListModel cm = ListModel(
+                            namak: namak!, tgl: tgl!, desk: desk!, dana: dana!);
+                        listController.addList(cm);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Proposal Added')));
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ListPengajuan2(),
-                        ),
-                      );
-                    }
-                    //print(cm);
-                  },
-                  child: const Text('Tambah Proposal'),
-                )
-              ],
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ListPengajuan2(),
+                          ),
+                        );
+                      }
+                      //print(cm);
+                    },
+                    child: const Text('Tambah Proposal'),
+                  )
+                ],
+              ),
             ),
           ),
         ],
