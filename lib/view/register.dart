@@ -87,12 +87,19 @@ class _RegisterState extends State<Register> {
                   },
                 ),
                 TextFormField(
+                  decoration: const InputDecoration(hintText: 'Role'),
+                  onSaved: (newValue) {
+                    role:
+                    'K';
+                  },
+                ),
+                TextFormField(
                   decoration: const InputDecoration(hintText: 'Email'),
                   onChanged: (value) {
                     email = value;
                   },
                   validator: (value) {
-                    // Validasi menggunakan regex
+                    // Validasi
                     if (value == null || value.isEmpty) {
                       return 'Email harus diisi';
                     }
@@ -122,10 +129,8 @@ class _RegisterState extends State<Register> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ListPengajuan()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login()));
                     if (formkey.currentState!.validate()) {
                       UserModel? registeredUser =
                           await authCtrl.registeremailPassword(email!,

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pengajuan_dana/view/cobalist.dart';
 import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/cobaregister.dart';
 import 'package:pengajuan_dana/view/list.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: Login());
+        home: ListPengajuan2());
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:pengajuan_dana/view/cobalist.dart';
 
 class AddPengajuan extends StatefulWidget {
   const AddPengajuan({Key? key});
@@ -73,6 +74,10 @@ class _AddPengajuanState extends State<AddPengajuan> {
       }
 
       // Menampilkan pesan sukses
+      final listPengajuan2Widget = ListPengajuan2();
+      final listPengajuan2State = listPengajuan2Widget.createState();
+      listPengajuan2State.initState();
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -172,8 +177,14 @@ class _AddPengajuanState extends State<AddPengajuan> {
                   child: const Text('Upload Proposal'),
                 ),
                 ElevatedButton(
-                  onPressed: _tambahPengajuan,
                   child: const Text('Tambah Pengajuan'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => ListPengajuan2()),
+                    );
+                  },
                 ),
               ],
             ),
