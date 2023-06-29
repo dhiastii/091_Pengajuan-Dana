@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:pengajuan_dana/view/list.dart';
+import 'package:pengajuan_dana/view/cobalist.dart';
 
 class Keputusan extends StatefulWidget {
   const Keputusan({super.key});
@@ -87,7 +87,7 @@ class _KeputusanState extends State<Keputusan> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ListPengajuan()),
+              MaterialPageRoute(builder: (context) => ListPengajuan2()),
             );
           },
           child: Container(

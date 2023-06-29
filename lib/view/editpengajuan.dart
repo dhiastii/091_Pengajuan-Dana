@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/view/addpengajuan.dart';
-import 'package:pengajuan_dana/view/list.dart';
+import 'package:pengajuan_dana/view/cobalist.dart';
 
 class EditPengajuan extends StatefulWidget {
   const EditPengajuan({super.key});
@@ -86,7 +86,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
           ElevatedButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ListPengajuan()));
+                  MaterialPageRoute(builder: (context) => ListPengajuan2()));
             },
             child: const Text('Save'),
           ),

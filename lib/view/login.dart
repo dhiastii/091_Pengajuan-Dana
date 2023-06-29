@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
 import 'package:pengajuan_dana/view/SplashScreen.dart';
-import 'package:pengajuan_dana/view/list.dart';
+import 'package:pengajuan_dana/view/cobalist.dart';
 import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
@@ -186,7 +186,8 @@ class _LoginState extends State<Login> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => ListPengajuan(),
+                                          builder: (context) =>
+                                              ListPengajuan2(),
                                         ),
                                       );
                                       print(signUser.email);
