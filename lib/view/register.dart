@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
 import 'package:pengajuan_dana/view/login.dart';
-import 'package:pengajuan_dana/view/list.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -87,13 +86,6 @@ class _RegisterState extends State<Register> {
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(hintText: 'Role'),
-                  onSaved: (newValue) {
-                    role:
-                    'K';
-                  },
-                ),
-                TextFormField(
                   decoration: const InputDecoration(hintText: 'Email'),
                   onChanged: (value) {
                     email = value;
@@ -102,15 +94,10 @@ class _RegisterState extends State<Register> {
                     // Validasi
                     if (value == null || value.isEmpty) {
                       return 'Email harus diisi';
+                    } else if (!value.contains("@") || !value.contains(".")) {
+                      return "Please enter a valid email address";
                     }
-                    // Regex pattern untuk validasi email
-                    final emailRegex =
-                        r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$';
-                    // Mengecek apakah nilai email cocok dengan regex pattern
-                    if (!RegExp(emailRegex).hasMatch(value)) {
-                      return 'Email tidak valid';
-                    }
-                    return null; // Mengembalikan null jika email valid
+                    return null;
                   },
                 ),
                 TextFormField(
@@ -130,11 +117,11 @@ class _RegisterState extends State<Register> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Login()));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => Login()));
                     if (formkey.currentState!.validate()) {
                       UserModel? registeredUser = await authCtrl.registrasi(
-                          email!, password!, nama!, divisi!, nim!, nohp!, role);
+                          nama!, nim!, nohp!, divisi!, email!, password!, role);
 
                       if (registeredUser != null) {
                         // Registration success
@@ -173,7 +160,10 @@ class _RegisterState extends State<Register> {
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Register()));
                                   },
                                   child: const Text('OK'),
                                 ),
