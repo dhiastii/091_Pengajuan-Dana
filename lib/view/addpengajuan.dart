@@ -5,25 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:pengajuan_dana/controller/list_controller.dart';
+import 'package:pengajuan_dana/model/list_model.dart';
 import 'package:pengajuan_dana/view/cobalist.dart';
 
 class AddPengajuan extends StatefulWidget {
-  const AddPengajuan({Key? key});
+  const AddPengajuan({super.key});
 
   @override
-  _AddPengajuanState createState() => _AddPengajuanState();
+  State<AddPengajuan> createState() => _AddPengajuanState();
 }
 
 class _AddPengajuanState extends State<AddPengajuan> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  var listController = ListController();
 
-  final TextEditingController _namaController = TextEditingController();
-  final TextEditingController _tanggalController = TextEditingController();
-  final TextEditingController _deskripsiController = TextEditingController();
-  final TextEditingController _danaController = TextEditingController();
+  final formkey = GlobalKey<FormState>();
 
-  late String _filePath;
+  String? namak;
+  String? tgl;
+  String? desk;
+  String? dana;
+  late String? _filePath;
 
   Future<void> _selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -35,86 +37,6 @@ class _AddPengajuanState extends State<AddPengajuan> {
       setState(() {
         _filePath = result.files.single.path!;
       });
-    }
-  }
-
-  Future<void> _tambahPengajuan() async {
-    try {
-      // Membuat dokumen baru pada koleksi "pengajuan"
-      final pengajuanRef = _firestore.collection('pengajuan').doc();
-
-      // Mengambil ID pengguna yang sedang login
-      final user = _auth.currentUser;
-      final userId = user?.uid;
-
-      // Membuat data pengajuan
-      final pengajuanData = {
-        'nama_kegiatan': _namaController.text,
-        'tanggal_kegiatan': _tanggalController.text,
-        'deskripsi_kegiatan': _deskripsiController.text,
-        'pengajuan_dana': _danaController.text,
-        'user_id': userId,
-      };
-
-      // Menyimpan data pengajuan ke Firestore
-      await pengajuanRef.set(pengajuanData);
-
-      // Menyimpan file PDF ke Firebase Storage
-      if (_filePath.isNotEmpty) {
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('pengajuan')
-            .child(pengajuanRef.id)
-            .child('proposal.pdf');
-
-        final fileData = File(_filePath);
-        final uploadTask = storageRef.putFile(fileData);
-
-        await uploadTask.whenComplete(() => null);
-      }
-
-      // Menampilkan pesan sukses
-      final listPengajuan2Widget = ListPengajuan2();
-      final listPengajuan2State = listPengajuan2Widget.createState();
-      listPengajuan2State.initState();
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Pengajuan Berhasil'),
-            content: const Text('Pengajuan Anda telah ditambahkan.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } catch (e) {
-      // Menampilkan pesan error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Pengajuan Gagal'),
-            content:
-                const Text('Terjadi kesalahan saat menambahkan pengajuan.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
     }
   }
 
@@ -155,37 +77,55 @@ class _AddPengajuanState extends State<AddPengajuan> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: _namaController,
                   decoration: const InputDecoration(hintText: 'Nama Kegiatan'),
+                  onChanged: (value) {
+                    namak = value;
+                  },
                 ),
                 TextFormField(
-                  controller: _tanggalController,
                   decoration:
                       const InputDecoration(hintText: 'Tanggal Kegiatan'),
+                  onChanged: (value) {
+                    tgl = value;
+                  },
                 ),
                 TextFormField(
-                  controller: _deskripsiController,
                   decoration:
                       const InputDecoration(hintText: 'Deskripsi Kegiatan'),
+                  onChanged: (value) {
+                    desk = value;
+                  },
                 ),
                 TextFormField(
-                  controller: _danaController,
                   decoration: const InputDecoration(hintText: 'Pengajuan Dana'),
+                  onChanged: (value) {
+                    dana = value;
+                  },
                 ),
                 ElevatedButton(
                   onPressed: _selectFile,
                   child: const Text('Upload Proposal'),
                 ),
                 ElevatedButton(
-                  child: const Text('Tambah Pengajuan'),
                   onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => ListPengajuan2()),
-                    );
+                    if (formkey.currentState!.validate()) {
+                      ListModel cm = ListModel(
+                          namak: namak!, tgl: tgl!, desk: desk!, dana: dana!);
+                      listController.addList(cm);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Proposal Added')));
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ListPengajuan2(),
+                        ),
+                      );
+                    }
+                    //print(cm);
                   },
-                ),
+                  child: const Text('Tambah Proposal'),
+                )
               ],
             ),
           ),
