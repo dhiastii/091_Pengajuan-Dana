@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pengajuan_dana/controller/list_controller.dart';
 import 'package:pengajuan_dana/view/addpengajuan.dart';
 import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
@@ -12,6 +13,7 @@ class ListPengajuan2 extends StatefulWidget {
 
 class _ListPengajuan2State extends State<ListPengajuan2> {
   late List<Map<String, dynamic>> pengajuanList = [];
+  var ls = ListController();
 
   @override
   void initState() {
@@ -136,6 +138,19 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                             ),
                           ),
                         ],
+                        // : IconButton(
+                        //   icon: const Icon(Icons.delete),
+                        //   onPressed: () {
+                        //     ls.removeList(pengajuanList[index]['id'].toString());
+                        //     setState(() {
+                        //       ls.getList();
+                        //     });
+
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //         const SnackBar(
+                        //             content: Text('Pengajuan dihapus.')));
+                        //   },
+                        // ),
                       ),
                     ),
                   );
