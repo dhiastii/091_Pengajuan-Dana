@@ -79,7 +79,7 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
             left: 27,
             child: Container(
               width: 337,
-              height: 400,
+              height: 550,
               child: ListView.builder(
                 itemCount: pengajuanList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -93,13 +93,15 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                     padding: EdgeInsets.all(8.0),
                     child: Container(
                       width: double.infinity,
-                      height: 100,
+                      height: 130,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Color.fromRGBO(59, 133, 199, 1),
                       ),
+                      padding: EdgeInsets.only(left: 8.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Nama Kegiatan: $namaKegiatan',
@@ -130,6 +132,15 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                           ),
                           Text(
                             'Pengajuan Dana: $pengajuanDana',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Arsenal',
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Text(
+                            'Status: Menunggu',
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Arsenal',

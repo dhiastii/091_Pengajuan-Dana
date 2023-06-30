@@ -108,7 +108,7 @@ class _AddPengajuanState extends State<AddPengajuan> {
                   ),
                   TextFormField(
                     decoration: const InputDecoration(hintText: 'Status'),
-                    initialValue: 'Menunggu',
+                    initialValue: 'Status : Menunggu',
                     enabled: false,
                   ),
                   // ElevatedButton(
