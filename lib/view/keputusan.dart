@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:pengajuan_dana/controller/list_controller.dart';
 import 'package:pengajuan_dana/view/cobalist.dart';
+import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
 class Keputusan extends StatefulWidget {
-  const Keputusan({super.key});
+  final String namaKegiatan;
+  final String tanggalKegiatan;
+  final String deskripsiKegiatan;
+  final String pengajuanDana;
+
+  const Keputusan({
+    Key? key,
+    required this.namaKegiatan,
+    required this.tanggalKegiatan,
+    required this.deskripsiKegiatan,
+    required this.pengajuanDana,
+  }) : super(key: key);
 
   @override
-  State<Keputusan> createState() => _KeputusanState();
+  _KeputusanState createState() => _KeputusanState();
 }
 
 class _KeputusanState extends State<Keputusan> {
+  String status = 'Menunggu';
+
+  void _setApprovalStatus(String newStatus) {
+    setState(() {
+      status = newStatus;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    String namak;
-    String tgl;
-    String desk;
-    String dana;
     return Scaffold(
         body: Stack(children: <Widget>[
       Positioned(
@@ -29,9 +44,9 @@ class _KeputusanState extends State<Keputusan> {
           )),
       Positioned(
         top: 120,
-        left: 65,
+        left: 115,
         child: Text(
-          'Formulir Pengajuan Dana',
+          'Pengajuan Dana',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Color.fromRGBO(0, 0, 0, 1),
@@ -43,66 +58,71 @@ class _KeputusanState extends State<Keputusan> {
           ),
         ),
       ),
-      Positioned(
-        top: 180,
-        left: 30,
-        right: 50,
-        child: Column(children: [
-          TextFormField(
-            decoration: const InputDecoration(hintText: 'Nama Kegiatan'),
-            onChanged: (value) {
-              namak = value;
-            },
+      Padding(
+        padding: EdgeInsets.fromLTRB(10, 165, 10, 300),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.blue, // Warna biru
           ),
-          TextFormField(
-            decoration: const InputDecoration(hintText: 'Tanggal Kegiatan'),
-            onChanged: (value) {
-              tgl = value;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(hintText: 'Deskripsi Kegiatan'),
-            onChanged: (value) {
-              desk = value;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(hintText: 'Pengajuan Dana'),
-            onChanged: (value) {
-              dana = value;
-            },
-          ),
-          TextFormField(
-            decoration: const InputDecoration(hintText: 'Upload Proposal'),
-            onChanged: (value) {
-              dana = value;
-            },
-          ),
-        ]),
-      ),
-      Positioned(
-        top: 700,
-        left: 30,
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ListPengajuan2()),
-            );
-          },
-          child: Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(240),
-              image: DecorationImage(
-                image: AssetImage('assets/images/accept.png'),
-                fit: BoxFit.fitWidth,
+          padding: EdgeInsets.all(10), // Padding di dalam kotak
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Nama Kegiatan: ${widget.namaKegiatan}',
+                style: const TextStyle(fontSize: 18),
               ),
-            ),
+              const SizedBox(height: 10),
+              Text(
+                'Tanggal Kegiatan: ${widget.tanggalKegiatan}',
+                style: const TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Deskripsi Kegiatan: ${widget.deskripsiKegiatan}',
+                style: const TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Pengajuan Dana: ${widget.pengajuanDana}',
+                style: const TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Status: $status',
+                style: const TextStyle(fontSize: 24),
+              ),
+              const SizedBox(
+                  height: 10), // Memberikan jarak antara teks status dan button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      _setApprovalStatus('Diterima');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.green, // Warna latar belakang hijau
+                    ),
+                    child: const Text('Terima'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _setApprovalStatus('Ditolak');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red, // Warna latar belakang merah
+                    ),
+                    child: const Text('Tolak'),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
-      ),
+      )
     ]));
   }
 }
