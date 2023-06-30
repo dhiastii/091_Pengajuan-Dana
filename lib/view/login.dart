@@ -152,8 +152,7 @@ class _LoginState extends State<Login> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text('Login Prodi Successful'),
-                                content: const Text(
-                                    'You have been successfully Logged in.'),
+                                content: const Text('Selamat Datang Pak/Bu'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
@@ -178,8 +177,7 @@ class _LoginState extends State<Login> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: const Text('Login KMTI Successful'),
-                                content: const Text(
-                                    'You have been successfully Logged in.'),
+                                content: const Text('Selamat Datang KMTI'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {

@@ -8,14 +8,8 @@ import 'package:pengajuan_dana/view/addpengajuan.dart';
 import 'package:pengajuan_dana/view/cobalist.dart';
 
 class EditPengajuan extends StatefulWidget {
-  const EditPengajuan({
-    Key? key,
-    this.id,
-    this.namak,
-    this.tgl,
-    this.desk,
-    this.dana,
-  }) : super(key: key);
+  const EditPengajuan(
+      {super.key, this.id, this.namak, this.tgl, this.desk, this.dana});
 
   final String? id;
   final String? namak;
@@ -80,15 +74,15 @@ class _EditPengajuanState extends State<EditPengajuan> {
                 initialValue: widget.dana,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formkey.currentState!.validate()) {
                     formkey.currentState!.save();
                     ListModel ls = ListModel(
-                        id: widget.id,
-                        namak: newnamak!.toString(),
-                        tgl: newtgl!.toString(),
-                        desk: newdesk!.toString(),
-                        dana: newdana!.toString());
+                        dana: newdana!,
+                        desk: newdesk!,
+                        namak: newnamak!,
+                        tgl: newtgl!,
+                        id: widget.id);
                     listController.updateList(ls);
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Pengajuan berhasil di update')));
@@ -99,6 +93,13 @@ class _EditPengajuanState extends State<EditPengajuan> {
                         builder: (context) => const ListPengajuan2(),
                       ),
                     );
+                  } else {
+                    Text('Gagal Update');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListPengajuan2(),
+                        ));
                   }
                 },
                 child: const Text('Edit Pengajuan'),

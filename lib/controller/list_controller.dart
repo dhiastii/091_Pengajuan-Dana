@@ -29,7 +29,7 @@ class ListController {
     await docRef.update(listModel.toMap());
   }
 
-  Future<void> updateList(ListModel lsmodel) async {
+  Future updateList(ListModel lsmodel) async {
     final ListModel listModel = ListModel(
         id: lsmodel.id,
         namak: lsmodel.namak,
@@ -38,9 +38,10 @@ class ListController {
         dana: lsmodel.dana);
 
     await listCollection.doc(lsmodel.id).update(listModel.toMap());
+    await getList();
   }
 
-  Future<void> removeList(String id) async {
+  Future removeList(String id) async {
     await listCollection.doc(id).delete();
     await getList();
   }
