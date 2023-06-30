@@ -106,6 +106,11 @@ class _AddPengajuanState extends State<AddPengajuan> {
                       dana = value;
                     },
                   ),
+                  TextFormField(
+                    decoration: const InputDecoration(hintText: 'Status'),
+                    initialValue: 'Menunggu',
+                    enabled: false,
+                  ),
                   // ElevatedButton(
                   //   onPressed: _selectFile,
                   //   child: const Text('Upload Proposal'),
@@ -126,7 +131,6 @@ class _AddPengajuanState extends State<AddPengajuan> {
                           ),
                         );
                       }
-                      //print(cm);
                     },
                     child: const Text('Tambah Proposal'),
                   )
