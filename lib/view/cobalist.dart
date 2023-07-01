@@ -67,18 +67,18 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                       var tgl = pengajuanlist[index]['tgl'].toString();
                       var desk = pengajuanlist[index]['desk'].toString();
                       var dana = pengajuanlist[index]['dana'].toString();
+                      var pdf = pengajuanlist[index]['pdf'].toString();
                       var status = pengajuanlist[index]['status'].toString();
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                             child: Container(
                           width: double.infinity,
-                          height: 130,
+                          padding: EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Color.fromRGBO(59, 133, 199, 1),
                           ),
-                          padding: EdgeInsets.only(left: 8.0),
                           child: Row(children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8.0),
@@ -184,6 +184,33 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal,
                                   ),
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        if (pdf != null) {
+                                          (pdf);
+                                        } else {
+                                          Container();
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.picture_as_pdf,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Dokumen Proposal',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Arsenal',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 status == null
                                     ? Text(
