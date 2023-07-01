@@ -7,6 +7,7 @@ class ListModel {
   final String desk;
   final String dana;
   String? status;
+  String? pdf;
   ListModel({
     this.id,
     required this.namak,
@@ -14,6 +15,7 @@ class ListModel {
     required this.desk,
     required this.dana,
     this.status,
+    this.pdf,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,6 +26,7 @@ class ListModel {
       'desk': desk,
       'dana': dana,
       'status': status,
+      'pdf': pdf,
     };
   }
 
@@ -34,7 +37,8 @@ class ListModel {
       tgl: map['tgl'] ?? '',
       desk: map['desk'] ?? '',
       dana: map['dana'] ?? '',
-      status: map['status']?.toInt(),
+      status: map['status'],
+      pdf: map['pdf'],
     );
   }
 

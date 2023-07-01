@@ -36,8 +36,35 @@ class _EditPengajuanState extends State<EditPengajuan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(10),
+        body: Stack(children: <Widget>[
+      Positioned(
+          top: 1,
+          left: 120,
+          child: Image.asset(
+            'assets/images/logoatas.jpg',
+            width: 150,
+            height: 150,
+          )),
+      Positioned(
+        top: 120,
+        left: 90,
+        child: Text(
+          'Edit Pengajuan Dana',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Color.fromRGBO(0, 0, 0, 1),
+            fontFamily: 'Arsenal',
+            fontSize: 24,
+            letterSpacing: 0,
+            fontWeight: FontWeight.normal,
+            height: 1,
+          ),
+        ),
+      ),
+      Positioned(
+        top: 150,
+        left: 30,
+        right: 30,
         child: Form(
           key: formkey,
           child: Column(
@@ -108,6 +135,6 @@ class _EditPengajuanState extends State<EditPengajuan> {
           ),
         ),
       ),
-    );
+    ]));
   }
 }

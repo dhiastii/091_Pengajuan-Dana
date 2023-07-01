@@ -25,18 +25,42 @@ class _AddPengajuanState extends State<AddPengajuan> {
   String? tgl;
   String? desk;
   String? dana;
-  late String? _filePath;
+  PlatformFile? pickedFile;
 
   Future<void> _selectFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
 
     if (result != null) {
       setState(() {
-        _filePath = result.files.single.path!;
+        pickedFile = result.files.first;
       });
+    }
+  }
+
+  Future<void> _uploadFile() async {
+    if (pickedFile != null) {
+      final file = File(pickedFile!.path!);
+      final fileName = pickedFile!.name;
+
+      try {
+        // Upload the file to Firebase Storage
+        final storageRef = FirebaseStorage.instance.ref().child(fileName);
+        final uploadTask = storageRef.putFile(file);
+        final TaskSnapshot taskSnapshot = await uploadTask;
+
+        // Retrieve the download URL of the uploaded file
+        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+        // TODO: Save the download URL to Firestore or perform further actions
+        // with the uploaded file.
+
+        print('File uploaded successfully. Download URL: $downloadUrl');
+      } catch (error) {
+        print('Error uploading file: $error');
+      }
     }
   }
 
@@ -111,15 +135,32 @@ class _AddPengajuanState extends State<AddPengajuan> {
                     initialValue: 'Status : Menunggu',
                     enabled: false,
                   ),
-                  // ElevatedButton(
-                  //   onPressed: _selectFile,
-                  //   child: const Text('Upload Proposal'),
-                  // ),
+                  if (pickedFile != null)
+                    Expanded(
+                      child: Container(
+                        child: Center(
+                          child: Text(pickedFile!.name),
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: _selectFile,
+                    child: const Text('Select Proposal'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _uploadFile,
+                    child: const Text('Upload Proposal'),
+                  ),
                   ElevatedButton(
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
                         ListModel cm = ListModel(
-                            namak: namak!, tgl: tgl!, desk: desk!, dana: dana!);
+                            namak: namak!,
+                            tgl: tgl!,
+                            desk: desk!,
+                            dana: dana!,
+                            pdf: pickedFile?.name);
                         listController.addList(cm);
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Proposal Added')));
