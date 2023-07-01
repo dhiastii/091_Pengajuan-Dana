@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/controller/list_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pengajuan_dana/view/cobalist.dart';
 import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
 class Keputusan extends StatefulWidget {
+  final String id;
   final String namaKegiatan;
   final String tanggalKegiatan;
   final String deskripsiKegiatan;
@@ -15,6 +17,7 @@ class Keputusan extends StatefulWidget {
     required this.tanggalKegiatan,
     required this.deskripsiKegiatan,
     required this.pengajuanDana,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -27,6 +30,17 @@ class _KeputusanState extends State<Keputusan> {
   void _setApprovalStatus(String newStatus) {
     setState(() {
       status = newStatus;
+    });
+
+    // Simpan status ke Firestore
+    FirebaseFirestore.instance
+        .collection('pengajuan')
+        .doc(widget
+            .id) // Gunakan field unik sebagai ID dokumen (misalnya, namaKegiatan)
+        .update({'status': newStatus}).then((value) {
+      print('Status berhasil diperbarui');
+    }).catchError((error) {
+      print('Terjadi error saat memperbarui status: $error');
     });
   }
 
@@ -100,7 +114,12 @@ class _KeputusanState extends State<Keputusan> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      _setApprovalStatus('Diterima');
+                      _setApprovalStatus("Diterima");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewProdi(),
+                          ));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -111,6 +130,11 @@ class _KeputusanState extends State<Keputusan> {
                   ElevatedButton(
                     onPressed: () {
                       _setApprovalStatus('Ditolak');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewProdi(),
+                          ));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red, // Warna latar belakang merah

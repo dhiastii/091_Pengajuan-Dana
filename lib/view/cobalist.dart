@@ -67,6 +67,7 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                       var tgl = pengajuanlist[index]['tgl'].toString();
                       var desk = pengajuanlist[index]['desk'].toString();
                       var dana = pengajuanlist[index]['dana'].toString();
+                      var status = pengajuanlist[index]['status'].toString();
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
@@ -184,15 +185,25 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
-                                Text(
-                                  'Status: Menunggu',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Arsenal',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
+                                status == null
+                                    ? Text(
+                                        'Status: Menunggu',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Arsenal',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Status: ' + status,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Arsenal',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
                               ],
                             ),
                           ]),
