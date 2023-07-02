@@ -27,11 +27,8 @@ class _AddPengajuanState extends State<AddPengajuan> {
   String? dana;
   PlatformFile? pickedFile;
 
-  Future<void> _selectFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
+  Future<void> selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
       setState(() {
@@ -40,28 +37,14 @@ class _AddPengajuanState extends State<AddPengajuan> {
     }
   }
 
-  Future<void> _uploadFile() async {
-    if (pickedFile != null) {
-      final file = File(pickedFile!.path!);
-      final fileName = pickedFile!.name;
-
-      try {
-        // Upload the file to Firebase Storage
-        final storageRef = FirebaseStorage.instance.ref().child(fileName);
-        final uploadTask = storageRef.putFile(file);
-        final TaskSnapshot taskSnapshot = await uploadTask;
-
-        // Retrieve the download URL of the uploaded file
-        final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-
-        // TODO: Save the download URL to Firestore or perform further actions
-        // with the uploaded file.
-
-        print('File uploaded successfully. Download URL: $downloadUrl');
-      } catch (error) {
-        print('Error uploading file: $error');
-      }
-    }
+  Future<String> uploadFile(File file) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference reference =
+        storage.ref().child('pengajuan/${DateTime.now().toString()}');
+    UploadTask uploadTask = reference.putFile(file);
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+    String downloadURL = await taskSnapshot.ref.getDownloadURL();
+    return downloadURL;
   }
 
   @override
@@ -135,23 +118,11 @@ class _AddPengajuanState extends State<AddPengajuan> {
                     initialValue: 'Status : Menunggu',
                     enabled: false,
                   ),
-                  if (pickedFile != null)
-                    Expanded(
-                      child: Container(
-                        child: Center(
-                          child: Text(pickedFile!.name),
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: _selectFile,
-                    child: const Text('Select Proposal'),
+                    onPressed: selectFile,
+                    child: const Text('Pilih File'),
                   ),
-                  ElevatedButton(
-                    onPressed: _uploadFile,
-                    child: const Text('Upload Proposal'),
-                  ),
+                  Text(pickedFile?.name ?? 'File belum dipilih'),
                   ElevatedButton(
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
@@ -161,6 +132,12 @@ class _AddPengajuanState extends State<AddPengajuan> {
                             desk: desk!,
                             dana: dana!,
                             pdf: pickedFile?.name);
+
+                        if (pickedFile != null) {
+                          File file = File(pickedFile!.path!);
+                          String downloadURL = await uploadFile(file);
+                          cm.pdf = downloadURL;
+                        }
                         listController.addList(cm);
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Proposal Added')));
@@ -174,7 +151,7 @@ class _AddPengajuanState extends State<AddPengajuan> {
                       }
                     },
                     child: const Text('Tambah Proposal'),
-                  )
+                  ),
                 ],
               ),
             ),
