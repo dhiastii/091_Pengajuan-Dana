@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/controller/list_controller.dart';
-import 'package:pengajuan_dana/view/addpengajuan.dart';
-import 'package:pengajuan_dana/view/editpengajuan.dart';
+import 'package:pengajuan_dana/view/kmti/addpengajuan.dart';
+import 'package:pengajuan_dana/view/kmti/editpengajuan.dart';
 import 'package:pengajuan_dana/view/viewpdf.dart';
 
-class ListPengajuan2 extends StatefulWidget {
-  const ListPengajuan2({Key? key}) : super(key: key);
+class ListPengajuan extends StatefulWidget {
+  const ListPengajuan({Key? key}) : super(key: key);
 
   @override
-  _ListPengajuan2State createState() => _ListPengajuan2State();
+  _ListPengajuanState createState() => _ListPengajuanState();
 }
 
-class _ListPengajuan2State extends State<ListPengajuan2> {
+class _ListPengajuanState extends State<ListPengajuan> {
   var ls = ListController();
 
   @override
