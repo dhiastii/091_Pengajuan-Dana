@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/controller/list_controller.dart';
 import 'package:pengajuan_dana/view/addpengajuan.dart';
 import 'package:pengajuan_dana/view/editpengajuan.dart';
-import 'package:pengajuan_dana/view/viewpengajuan.dart';
+import 'package:pengajuan_dana/view/viewpdf.dart';
 
 class ListPengajuan2 extends StatefulWidget {
   const ListPengajuan2({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
               ),
             ),
             Container(
-              child: Text(
+              child: const Text(
                 'Daftar Pengajuan Dana',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -48,7 +49,7 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
@@ -56,7 +57,7 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                 stream: ls.stream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                   final List<DocumentSnapshot> pengajuanlist = snapshot.data!;
                   return ListView.builder(
@@ -67,37 +68,22 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                       var tgl = pengajuanlist[index]['tgl'].toString();
                       var desk = pengajuanlist[index]['desk'].toString();
                       var dana = pengajuanlist[index]['dana'].toString();
-                      var pdf = pengajuanlist[index]['pdf'].toString();
+                      var pdf = pengajuanlist[index]['pdf'];
                       var status = pengajuanlist[index]['status'].toString();
 
-                      Color boxColor;
-
-                      // Menentukan warna sesuai status
-                      switch (pengajuanlist[index]['status']) {
-                        case '1':
-                          boxColor = Colors.blue;
-                          break;
-                        case 'Diterima':
-                          boxColor = Colors.green;
-                          break;
-                        case 'Ditolak':
-                          boxColor = Colors.red;
-                          break;
-                        default:
-                          boxColor = Colors.blue;
-                      }
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                             child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: boxColor),
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color.fromRGBO(59, 133, 199, 1),
+                          ),
                           child: Row(children: [
                             Padding(
-                              padding: EdgeInsets.only(right: 8.0),
+                              padding: const EdgeInsets.only(right: 8.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -112,7 +98,7 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                     ),
                                   );
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.edit,
                                   color: Colors.white,
                                   size: 24,
@@ -120,41 +106,39 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(right: 8.0),
+                              padding: const EdgeInsets.only(right: 8.0),
                               child: GestureDetector(
                                 onTap: () {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
-                                      title: Text('Konfirmasi'),
-                                      content: Text(
+                                      title: const Text('Konfirmasi'),
+                                      content: const Text(
                                           'Apakah Anda yakin ingin menghapus data ini?'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context),
-                                          child: Text('Batal'),
+                                          child: const Text('Batal'),
                                         ),
                                         TextButton(
                                           onPressed: () {
                                             var rm =
                                                 ls.removeList(id.toString());
-                                            if (rm != null) {
-                                              rm.then((value) {
-                                                setState(() {
-                                                  ls.getList();
-                                                });
+                                            rm.then((value) {
+                                              setState(() {
+                                                ls.getList();
                                               });
-                                            }
+                                            });
                                             Navigator.pop(context);
                                           },
-                                          child: Text('Hapus'),
+                                          child: const Text('Hapus'),
                                         ),
                                       ],
                                     ),
                                   );
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.delete,
                                   color: Colors.white,
                                   size: 24,
@@ -166,8 +150,8 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nama Kegiatan: ' + namak,
-                                  style: TextStyle(
+                                  'Nama Kegiatan: $namak',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Arsenal',
                                     fontSize: 16,
@@ -175,8 +159,8 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                   ),
                                 ),
                                 Text(
-                                  'Tanggal Kegiatan: ' + tgl,
-                                  style: TextStyle(
+                                  'Tanggal Kegiatan: $tgl',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Arsenal',
                                     fontSize: 16,
@@ -184,8 +168,8 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                   ),
                                 ),
                                 Text(
-                                  'Deskripsi Kegiatan: ' + desk,
-                                  style: TextStyle(
+                                  'Deskripsi Kegiatan: $desk',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Arsenal',
                                     fontSize: 16,
@@ -193,8 +177,8 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                   ),
                                 ),
                                 Text(
-                                  'Pengajuan Dana: ' + dana,
-                                  style: TextStyle(
+                                  'Pengajuan Dana: $dana',
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Arsenal',
                                     fontSize: 16,
@@ -205,19 +189,18 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                   children: [
                                     IconButton(
                                       onPressed: () {
-                                        if (pdf != null) {
-                                          (pdf);
-                                        } else {
-                                          Container();
-                                        }
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    viewPdf(pdfurl: pdf)));
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.picture_as_pdf,
                                         color: Colors.white,
                                         size: 24,
                                       ),
                                     ),
-                                    Text(
+                                    const Text(
                                       'Dokumen Proposal',
                                       style: TextStyle(
                                         color: Colors.white,
@@ -228,8 +211,9 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                     ),
                                   ],
                                 ),
-                                status == null
-                                    ? Text(
+                                // ignore: unrelated_type_equality_checks
+                                status == 1
+                                    ? const Text(
                                         'Status: Menunggu',
                                         style: TextStyle(
                                           color: Colors.white,
@@ -239,8 +223,8 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                                         ),
                                       )
                                     : Text(
-                                        'Status: ' + status,
-                                        style: TextStyle(
+                                        'Status: $status',
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Arsenal',
                                           fontSize: 16,
@@ -264,10 +248,10 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddPengajuan()),
+            MaterialPageRoute(builder: (context) => const AddPengajuan()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
