@@ -126,7 +126,7 @@ class _AddPengajuanState extends State<AddPengajuan> {
                   ElevatedButton(
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
-                        ListModel cm = ListModel(
+                        ListModel ls = ListModel(
                             namak: namak!,
                             tgl: tgl!,
                             desk: desk!,
@@ -136,9 +136,9 @@ class _AddPengajuanState extends State<AddPengajuan> {
                         if (pickedFile != null) {
                           File file = File(pickedFile!.path!);
                           String downloadURL = await uploadFile(file);
-                          cm.pdf = downloadURL;
+                          ls.pdf = downloadURL;
                         }
-                        listController.addList(cm);
+                        listController.addList(ls);
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Proposal Added')));
 
