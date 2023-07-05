@@ -69,6 +69,23 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                       var dana = pengajuanlist[index]['dana'].toString();
                       var pdf = pengajuanlist[index]['pdf'].toString();
                       var status = pengajuanlist[index]['status'].toString();
+
+                      Color boxColor;
+
+                      // Menentukan warna sesuai status
+                      switch (pengajuanlist[index]['status']) {
+                        case '1':
+                          boxColor = Colors.blue;
+                          break;
+                        case 'Diterima':
+                          boxColor = Colors.green;
+                          break;
+                        case 'Ditolak':
+                          boxColor = Colors.red;
+                          break;
+                        default:
+                          boxColor = Colors.blue;
+                      }
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
@@ -76,9 +93,8 @@ class _ListPengajuan2State extends State<ListPengajuan2> {
                           width: double.infinity,
                           padding: EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color.fromRGBO(59, 133, 199, 1),
-                          ),
+                              borderRadius: BorderRadius.circular(20),
+                              color: boxColor),
                           child: Row(children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8.0),
