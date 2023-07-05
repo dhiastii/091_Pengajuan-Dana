@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/controller/list_controller.dart';
 import 'package:pengajuan_dana/view/addpengajuan.dart';
 import 'package:pengajuan_dana/view/keputusan.dart';
+import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/viewpengajuan.dart';
 
 class ViewProdi extends StatefulWidget {
@@ -109,81 +111,83 @@ class _ViewProdiState extends State<ViewProdi> {
                   var status = pengajuan['status'].toString();
 
                   return GestureDetector(
-                      onTap: () {
-                        _navigateToKeputusan(pengajuan);
-                      },
-                      child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color.fromRGBO(59, 133, 199, 1),
+                    onTap: () {
+                      _navigateToKeputusan(pengajuan);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromRGBO(59, 133, 199, 1),
+                        ),
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nama Kegiatan: $namaKegiatan',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Arsenal',
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nama Kegiatan: $namaKegiatan',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Arsenal',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Text(
-                                  'Tanggal Kegiatan: $tanggalKegiatan',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Arsenal',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Text(
-                                  'Deskripsi Kegiatan: $deskripsiKegiatan',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Arsenal',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                Text(
-                                  'Pengajuan Dana: $pengajuanDana',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Arsenal',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                                status == null
-                                    ? Text(
-                                        'Status: Menunggu',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Arsenal',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      )
-                                    : Text(
-                                        'Status: ' + status,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Arsenal',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                              ],
+                            Text(
+                              'Tanggal Kegiatan: $tanggalKegiatan',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Arsenal',
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                          )));
+                            Text(
+                              'Deskripsi Kegiatan: $deskripsiKegiatan',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Arsenal',
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Text(
+                              'Pengajuan Dana: $pengajuanDana',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Arsenal',
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            status == null
+                                ? Text(
+                                    'Status: Menunggu',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Arsenal',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                : Text(
+                                    'Status: ' + status,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Arsenal',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
