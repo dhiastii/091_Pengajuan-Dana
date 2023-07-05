@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pengajuan_dana/view/cobalist.dart';
-import 'package:pengajuan_dana/view/keputusan.dart';
+import 'package:pengajuan_dana/view/kmti/listpengajuan.dart';
+import 'package:pengajuan_dana/view/prodi/keputusan.dart';
 import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/register.dart';
 import 'package:pengajuan_dana/view/splashscreen.dart';
-import 'package:pengajuan_dana/view/viewpengajuan.dart';
+import 'package:pengajuan_dana/view/prodi/viewprodi.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ListPengajuan2());
+        home: ListPengajuan());
   }
 }

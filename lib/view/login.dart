@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/model/user_model.dart';
 import 'package:pengajuan_dana/view/SplashScreen.dart';
-import 'package:pengajuan_dana/view/cobalist.dart';
+import 'package:pengajuan_dana/view/kmti/listpengajuan.dart';
 import 'package:pengajuan_dana/view/register.dart';
-import 'package:pengajuan_dana/view/viewpengajuan.dart';
+import 'package:pengajuan_dana/view/prodi/viewprodi.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key});
@@ -184,8 +184,7 @@ class _LoginState extends State<Login> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              ListPengajuan2(),
+                                          builder: (context) => ListPengajuan(),
                                         ),
                                       );
                                       print(signUser.email);
