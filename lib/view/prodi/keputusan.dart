@@ -18,6 +18,7 @@ class Keputusan extends StatefulWidget {
     required this.deskripsiKegiatan,
     required this.pengajuanDana,
     required this.id,
+    required pdf,
   }) : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class Keputusan extends StatefulWidget {
 }
 
 class _KeputusanState extends State<Keputusan> {
-  String status = 'Menunggu';
+  String status = 'Silakan Beri Keputusan';
 
   void _setApprovalStatus(String newStatus) {
     setState(() {

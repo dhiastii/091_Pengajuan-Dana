@@ -25,7 +25,8 @@ class ListController {
         tgl: lsmodel.tgl,
         desk: lsmodel.desk,
         dana: lsmodel.dana,
-        pdf: lsmodel.pdf);
+        pdf: lsmodel.pdf,
+        status: lsmodel.status);
 
     await docRef.update(listModel.toMap());
   }
@@ -37,7 +38,8 @@ class ListController {
         tgl: lsmodel.tgl,
         desk: lsmodel.desk,
         dana: lsmodel.dana,
-        pdf: lsmodel.pdf);
+        pdf: lsmodel.pdf,
+        status: lsmodel.status);
 
     await listCollection.doc(lsmodel.id).update(listModel.toMap());
     await getList();

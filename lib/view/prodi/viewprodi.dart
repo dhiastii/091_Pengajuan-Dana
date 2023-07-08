@@ -6,6 +6,7 @@ import 'package:pengajuan_dana/view/kmti/addpengajuan.dart';
 import 'package:pengajuan_dana/view/prodi/keputusan.dart';
 import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/prodi/viewprodi.dart';
+import 'package:pengajuan_dana/view/viewpdf.dart';
 
 class ViewProdi extends StatefulWidget {
   const ViewProdi({super.key});
@@ -17,6 +18,7 @@ class ViewProdi extends StatefulWidget {
 class _ViewProdiState extends State<ViewProdi> {
   late List<Map<String, dynamic>> pengajuanList = [];
   var ls = ListController();
+  var authctrl = AuthController();
 
   @override
   void initState() {
@@ -37,7 +39,8 @@ class _ViewProdiState extends State<ViewProdi> {
           'tgl': docData['tgl'],
           'desk': docData['desk'],
           'dana': docData['dana'],
-          'status': docData['status'],
+          'pdf': docData['pdf'],
+          'status': docData['status']
         };
       }).toList();
 
@@ -59,6 +62,7 @@ class _ViewProdiState extends State<ViewProdi> {
           tanggalKegiatan: pengajuan['tgl'],
           deskripsiKegiatan: pengajuan['desk'],
           pengajuanDana: pengajuan['dana'],
+          pdf: pengajuan['pdf'],
         ),
       ),
     );
@@ -67,37 +71,50 @@ class _ViewProdiState extends State<ViewProdi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 1,
-            left: 130,
-            child: Image.asset(
-              'assets/images/logoatas.jpg',
-              width: 150,
-              height: 150,
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                    onTap: () {
+                      authctrl.signOut();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 30,
+                      child: Image.asset('assets/images/logout.png'),
+                    )),
+                SizedBox(
+                  width: 2,
+                ),
+              ],
             ),
-          ),
-          Positioned(
-            top: 120,
-            left: 75,
-            child: Text(
-              'Daftar Pengajuan Dana',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color.fromRGBO(0, 0, 0, 1),
-                fontFamily: 'Arsenal',
-                fontSize: 24,
-                letterSpacing: 0,
-                fontWeight: FontWeight.normal,
-                height: 1,
+            Container(
+              child: Image.asset(
+                'assets/images/logoatas.jpg',
+                width: 150,
               ),
             ),
-          ),
-          Positioned(
-            top: 160,
-            left: 27,
-            child: Container(
+            Container(
+              child: Text(
+                'Daftar Pengajuan Dana',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                  fontFamily: 'Arsenal',
+                  fontSize: 24,
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.normal,
+                  height: 1,
+                ),
+              ),
+            ),
+            Container(
               width: 337,
               height: 550,
               child: ListView.builder(
@@ -108,7 +125,25 @@ class _ViewProdiState extends State<ViewProdi> {
                   var tanggalKegiatan = pengajuan['tgl'];
                   var deskripsiKegiatan = pengajuan['desk'];
                   var pengajuanDana = pengajuan['dana'];
+                  var pdf = pengajuan['pdf'];
                   var status = pengajuan['status'].toString();
+
+                  Color boxColor;
+
+                  // Menentukan warna sesuai status
+                  switch (status) {
+                    case 'Menunggu':
+                      boxColor = Colors.grey;
+                      break;
+                    case 'Diterima':
+                      boxColor = Colors.green;
+                      break;
+                    case 'Ditolak':
+                      boxColor = Colors.red;
+                      break;
+                    default:
+                      boxColor = Colors.blue;
+                  }
 
                   return GestureDetector(
                     onTap: () {
@@ -118,10 +153,10 @@ class _ViewProdiState extends State<ViewProdi> {
                       padding: EdgeInsets.all(8.0),
                       child: Container(
                         width: double.infinity,
-                        height: 130,
+                        height: 150,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(59, 133, 199, 1),
+                          color: boxColor,
                         ),
                         padding: EdgeInsets.only(left: 8.0),
                         child: Column(
@@ -183,6 +218,32 @@ class _ViewProdiState extends State<ViewProdi> {
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                viewPdf(pdfurl: pdf)));
+                                  },
+                                  icon: const Icon(
+                                    Icons.picture_as_pdf,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                ),
+                                const Text(
+                                  'Dokumen Proposal',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Arsenal',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -191,8 +252,8 @@ class _ViewProdiState extends State<ViewProdi> {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

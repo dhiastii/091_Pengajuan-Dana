@@ -97,7 +97,7 @@ class _ListPengajuanState extends State<ListPengajuan> {
 
                       // Menentukan warna sesuai status
                       switch (pengajuanlist[index]['status']) {
-                        case '1':
+                        case 'Menunggu':
                           boxColor = Colors.grey;
                           break;
                         case 'Diterima':
@@ -118,7 +118,7 @@ class _ListPengajuanState extends State<ListPengajuan> {
                           padding: const EdgeInsets.all(10.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromRGBO(59, 133, 199, 1),
+                            color: boxColor,
                           ),
                           child: Row(children: [
                             Padding(

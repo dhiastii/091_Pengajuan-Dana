@@ -113,11 +113,6 @@ class _AddPengajuanState extends State<AddPengajuan> {
                       dana = value;
                     },
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(hintText: 'Status'),
-                    initialValue: 'Status : Menunggu',
-                    enabled: false,
-                  ),
                   ElevatedButton(
                     onPressed: selectFile,
                     child: const Text('Pilih File'),
@@ -126,12 +121,14 @@ class _AddPengajuanState extends State<AddPengajuan> {
                   ElevatedButton(
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
+                        final status = 'Menunggu';
                         ListModel ls = ListModel(
                             namak: namak!,
                             tgl: tgl!,
                             desk: desk!,
                             dana: dana!,
-                            pdf: pickedFile?.name);
+                            pdf: pickedFile?.name,
+                            status: status.toString());
 
                         if (pickedFile != null) {
                           File file = File(pickedFile!.path!);

@@ -9,7 +9,7 @@ import 'package:pengajuan_dana/view/prodi/viewprodi.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); //buat setupss firebase
+  await Firebase.initializeApp(); //buat setup firebase
   runApp(const MyApp());
 }
 
@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ListPengajuan());
+        home: Login());
   }
 }
