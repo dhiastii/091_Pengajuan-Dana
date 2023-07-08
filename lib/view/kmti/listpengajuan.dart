@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:pengajuan_dana/controller/auth_controller.dart';
 import 'package:pengajuan_dana/controller/list_controller.dart';
 import 'package:pengajuan_dana/view/kmti/addpengajuan.dart';
 import 'package:pengajuan_dana/view/kmti/editpengajuan.dart';
+import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/viewpdf.dart';
 
 class ListPengajuan extends StatefulWidget {
@@ -15,6 +17,7 @@ class ListPengajuan extends StatefulWidget {
 
 class _ListPengajuanState extends State<ListPengajuan> {
   var ls = ListController();
+  var authctrl = AuthController();
 
   @override
   void initState() {
@@ -28,11 +31,30 @@ class _ListPengajuanState extends State<ListPengajuan> {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                    onTap: () {
+                      authctrl.signOut();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Login()));
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 30,
+                      child: Image.asset('assets/images/logout.png'),
+                    )),
+                SizedBox(
+                  width: 2,
+                ),
+              ],
+            ),
             Container(
               child: Image.asset(
                 'assets/images/logoatas.jpg',
                 width: 150,
-                height: 150,
               ),
             ),
             Container(
@@ -70,6 +92,23 @@ class _ListPengajuanState extends State<ListPengajuan> {
                       var dana = pengajuanlist[index]['dana'].toString();
                       var pdf = pengajuanlist[index]['pdf'];
                       var status = pengajuanlist[index]['status'].toString();
+
+                      Color boxColor;
+
+                      // Menentukan warna sesuai status
+                      switch (pengajuanlist[index]['status']) {
+                        case '1':
+                          boxColor = Colors.grey;
+                          break;
+                        case 'Diterima':
+                          boxColor = Colors.green;
+                          break;
+                        case 'Ditolak':
+                          boxColor = Colors.red;
+                          break;
+                        default:
+                          boxColor = Colors.blue;
+                      }
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -211,8 +250,7 @@ class _ListPengajuanState extends State<ListPengajuan> {
                                     ),
                                   ],
                                 ),
-                                // ignore: unrelated_type_equality_checks
-                                status == 1
+                                status == null || status == 1
                                     ? const Text(
                                         'Status: Menunggu',
                                         style: TextStyle(
