@@ -61,45 +61,80 @@ class _RegisterState extends State<Register> {
             key: formkey,
             child: Column(
               children: [
+                ///membuat teks input untuk nama
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Nama'),
                   onChanged: (value) {
                     nama = value;
                   },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Nama harus diisi";
+                    } else if (RegExp(r'\d').hasMatch(value)) {
+                      return "Nama tidak boleh mengandung angka";
+                    }
+                  },
                 ),
+
+                ///membuat teks input untuk NIM
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'NIM'),
                   onChanged: (value) {
                     nim = value;
                   },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "NIM harus diisi";
+                    } else if (RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                      return "NIM tidak boleh mengandung huruf";
+                    }
+                  },
                 ),
+
+                ///membuat teks input untuk no hp
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'No Hp'),
                   onChanged: (value) {
                     nohp = value;
                   },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Nomor HP harus diisi";
+                    } else if (value.length > 13) {
+                      return "Nomor HP tidak boleh lebih dari 13 karakter";
+                    } else if (RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                      return "Nomor HP tidak boleh mengandung huruf";
+                    }
+                  },
                 ),
+
+                ///membuat teks input untuk divisi
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Divisi'),
                   onChanged: (value) {
                     divisi = value;
                   },
                 ),
+
+                ///membuat teks input untuk email
                 TextFormField(
                   decoration: const InputDecoration(hintText: 'Email'),
                   onChanged: (value) {
                     email = value;
                   },
                   validator: (value) {
-                    // Validasi
                     if (value == null || value.isEmpty) {
+                      ///validasi jika data email kosong
                       return 'Email harus diisi';
                     } else if (!value.contains("@") || !value.contains(".")) {
+                      ///validasi untuk email harus mengandung @ dan .
                       return "Please enter a valid email address";
                     }
                     return null;
                   },
                 ),
+
+                ///membuat teks input untuk password
                 TextFormField(
                   obscureText: true,
                   keyboardType: TextInputType.visiblePassword,
@@ -109,22 +144,24 @@ class _RegisterState extends State<Register> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
+                      /// validasi jika data password kosong
                       return "Password harus diisi";
                     } else if (value.length < 6) {
+                      /// validasi untuk panjang data password harus lebih dari 6
                       return "Password minimal berisi 6 karakter";
                     }
                   },
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => Login()));
                     if (formkey.currentState!.validate()) {
+                      ///mengecek apakah data sudah pernah diinput atau belum
                       UserModel? registeredUser = await authCtrl.registrasi(
                           nama!, nim!, nohp!, divisi!, email!, password!, role);
 
                       if (registeredUser != null) {
-                        // Registration success
+                        ///validasi jika data yang dimasukkan tidak kosong
+                        /// Registration success
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -136,11 +173,14 @@ class _RegisterState extends State<Register> {
                                 TextButton(
                                   onPressed: () {
                                     print(registeredUser.nama);
+
+                                    ///navigasi ke halaman login
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return Login();
+
+                                      ///jika registrasi berhasil route akan diarahkan ke login
                                     }));
-                                    // Navigate to the next screen or perform any desired action
                                   },
                                   child: const Text('OK'),
                                 ),
@@ -149,7 +189,7 @@ class _RegisterState extends State<Register> {
                           },
                         );
                       } else {
-                        // Registration failed
+                        /// Registration failed
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -163,7 +203,8 @@ class _RegisterState extends State<Register> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Register()));
+                                            builder: (context) =>
+                                                Register())); //navigasi untuk kembali ke halaman registrasi
                                   },
                                   child: const Text('OK'),
                                 ),
@@ -192,6 +233,8 @@ class _RegisterState extends State<Register> {
                           ),
                         );
                       },
+
+                      ///untuk membuat link teks ke halaman login
                       child: const Text(
                         "Login",
                         style: TextStyle(fontWeight: FontWeight.bold),

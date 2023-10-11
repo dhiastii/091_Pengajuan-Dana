@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
+///Membuat model User
 class UserModel {
   String uid;
   String nama;

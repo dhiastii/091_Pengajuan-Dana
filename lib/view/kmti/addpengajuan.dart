@@ -27,6 +27,7 @@ class _AddPengajuanState extends State<AddPengajuan> {
   String? dana;
   PlatformFile? pickedFile;
 
+  /// Fungsi untuk memilih file dari penyimpanan perangkat.
   Future<void> selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
@@ -37,6 +38,7 @@ class _AddPengajuanState extends State<AddPengajuan> {
     }
   }
 
+  /// Fungsi untuk mengunggah file ke Firebase Storage.
   Future<String> uploadFile(File file) async {
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference reference =
@@ -61,7 +63,7 @@ class _AddPengajuanState extends State<AddPengajuan> {
               height: 150,
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 120,
             left: 65,
             child: Text(
@@ -119,9 +121,12 @@ class _AddPengajuanState extends State<AddPengajuan> {
                   ),
                   Text(pickedFile?.name ?? 'File belum dipilih'),
                   ElevatedButton(
+                    /// Fungsi untuk menambahkan data pengajuan proposal
                     onPressed: () async {
                       if (formkey.currentState!.validate()) {
                         final status = 'Menunggu';
+
+                        /// Mengisi data pengajuan
                         ListModel ls = ListModel(
                             namak: namak!,
                             tgl: tgl!,
@@ -130,15 +135,19 @@ class _AddPengajuanState extends State<AddPengajuan> {
                             pdf: pickedFile?.name,
                             status: status.toString());
 
+                        /// Memilih file PDF dan mengunggahnya
                         if (pickedFile != null) {
                           File file = File(pickedFile!.path!);
                           String downloadURL = await uploadFile(file);
                           ls.pdf = downloadURL;
                         }
+
+                        /// Menambahkan data ke controller
                         listController.addList(ls);
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Proposal Added')));
 
+                        /// Navigasi ke halaman ListPengajuan jika tombol 'tambah proposal' ditekan
                         Navigator.push(
                           context,
                           MaterialPageRoute(

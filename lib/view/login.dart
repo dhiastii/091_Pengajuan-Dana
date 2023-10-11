@@ -29,15 +29,19 @@ class _LoginState extends State<Login> {
       Positioned(
         top: 1,
         left: 130,
+
+        ///menampilkan logo di bagian atas
         child: Image.asset(
           'assets/images/logoatas.jpg',
           width: 150,
           height: 150,
         ),
       ),
-      Positioned(
+      const Positioned(
         top: 150,
         left: 170,
+
+        ///menampilkan teks bertulisan login
         child: Text(
           'Login',
           textAlign: TextAlign.center,
@@ -59,6 +63,7 @@ class _LoginState extends State<Login> {
             key: formkey,
             child: Column(
               children: [
+                ///membuat teks input untuk email address
                 TextFormField(
                   decoration: InputDecoration(
                     filled: true,
@@ -76,6 +81,8 @@ class _LoginState extends State<Login> {
                       borderRadius: new BorderRadius.circular(45),
                     ),
                   ),
+
+                  ///membuat validasi untuk email yang diinput
                   validator: (value) {
                     if (value!.length == 0) {
                       return "Email cannot be empty";
@@ -94,7 +101,11 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 20,
                 ),
+
+                ///membuat teks input untuk password
                 TextFormField(
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                         icon: Icon(eyeToggle
@@ -120,12 +131,17 @@ class _LoginState extends State<Login> {
                       borderRadius: new BorderRadius.circular(45),
                     ),
                   ),
+
+                  ///membuat validasi untuk password
                   validator: (value) {
-                    RegExp regex = new RegExp(r'^.{6,}$');
+                    RegExp regex = new RegExp(
+                        r'^.{6,}$'); //untuk memastikan data yang dimasukkan tidak kurang dari 6
                     if (value!.isEmpty) {
+                      ///untuk memastikan data yang dimasukkan tidak kosong
                       return "Password cannot be empty";
                     }
                     if (!regex.hasMatch(value)) {
+                      ///memastikan data yang dimasukkan sesuai dengan validasi regex
                       return ("please enter valid password min. 6 character");
                     } else {
                       return null;
@@ -147,6 +163,7 @@ class _LoginState extends State<Login> {
                             await authctrl.login(email!, password!);
 
                         if (signUser != null && signUser.role == "P") {
+                          ///validasi untuk data yang tidak kosong dan login dengan role 'P'
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -160,10 +177,13 @@ class _LoginState extends State<Login> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => ViewProdi(),
+
+                                          ///navigasi ke halaman viewprodi
                                         ),
                                       );
                                       print(signUser.email);
-                                      // Navigate to the next screen or perform any desired action
+
+                                      /// Navigate to the next screen or perform any desired action
                                     },
                                     child: const Text('OK'),
                                   ),
@@ -172,6 +192,7 @@ class _LoginState extends State<Login> {
                             },
                           );
                         } else if (signUser != null && signUser.role == "K") {
+                          ///validasi untuk data yang tidak kosong dan login dengan role 'K'
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -185,10 +206,13 @@ class _LoginState extends State<Login> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => ListPengajuan(),
+
+                                          /// navigasi ke halaman listpengajuan
                                         ),
                                       );
                                       print(signUser.email);
-                                      // Navigate to the next screen or perform any desired action
+
+                                      /// Navigate to the next screen or perform any desired action
                                     },
                                     child: const Text('OK'),
                                   ),
@@ -197,7 +221,7 @@ class _LoginState extends State<Login> {
                             },
                           );
                         } else {
-                          // Login failed
+                          /// Login failed
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -257,6 +281,8 @@ class _LoginState extends State<Login> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Register()));
+
+                            ///navigasi ke halaman register jika tidak memiliki akun
                           },
                           child: Text(
                             "Register",

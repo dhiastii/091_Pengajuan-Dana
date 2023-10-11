@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+///Membuat model List
 class ListModel {
   String? id;
   final String namak;

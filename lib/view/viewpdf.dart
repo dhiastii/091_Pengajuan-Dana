@@ -14,14 +14,18 @@ class _viewPdfState extends State<viewPdf> {
 
   void inisialisePdf() async {
     document = await PDFDocument.fromURL(widget.pdfurl);
+
+    ///untuk mengambil file pdf dari firebase
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
+    /// TODO: implement initState
     super.initState();
     inisialisePdf();
+
+    ///untuk mengambil dokumen pdf ketika widget dipanggil
   }
 
   @override

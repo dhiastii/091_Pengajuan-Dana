@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pengajuan_dana/view/login.dart';
 import 'package:pengajuan_dana/view/register.dart';
 
+//Splashscreen
 class SplashScreenn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,7 @@ class SplashScreenn extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          color: Color.fromRGBO(59, 133, 199, 1),
+          color: Color.fromRGBO(255, 255, 255, 1),
         ),
         child: Stack(
           children: <Widget>[

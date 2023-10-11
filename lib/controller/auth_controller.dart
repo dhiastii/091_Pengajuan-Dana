@@ -4,16 +4,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthController {
   final FirebaseAuth auth = FirebaseAuth.instance;
+
+  /// Membuat objek untuk Firebase Authentication
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
+  /// Mendapatkan referensi koleksi 'users' pada Firestore
+
   bool get succes => false;
 
+  /// Properti untuk mengecek sukses (belum diimplementasikan)
+
+  /// Fungsi untuk melakukan registrasi user baru
   Future<UserModel?> registrasi(String nama, String nim, String nohp,
       String divisi, String email, String password, String role) async {
     try {
       final UserCredential userCredential = await auth
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      /// Mendaftarkan pengguna baru dengan email dan password
 
       final User? user = userCredential.user;
 
@@ -30,17 +39,22 @@ class AuthController {
 
         await userCollection.doc(newUser.uid).set(newUser.toMap());
 
+        /// Menyimpan data pengguna baru ke Firestore
+
         return newUser;
       }
     } catch (e) {
-      print('Error registering user: $e');
+      print('Terjadi kesalahan saat mendaftarkan pengguna: $e');
     }
   }
 
+  /// Fungsi untuk melakukan login
   Future<UserModel?> login(String email, String password) async {
     try {
       final UserCredential userCredential = await auth
           .signInWithEmailAndPassword(email: email, password: password);
+
+      /// Proses login ke Firebase
       final User? user = userCredential.user;
 
       if (user != null) {
@@ -60,12 +74,13 @@ class AuthController {
         return currentUser;
       }
     } catch (e) {
-      print('Error login in: $e');
+      print('Terjadi kesalahan saat login: $e');
     }
 
     return null;
   }
 
+  /// Fungsi untuk mendapatkan pengguna yang sedang login
   UserModel? getCurrentUser() {
     final User? user = auth.currentUser;
     if (user != null) {
@@ -74,6 +89,7 @@ class AuthController {
     return null;
   }
 
+  /// Fungsi untuk keluar (logout)
   Future<void> signOut() async {
     await auth.signOut();
   }

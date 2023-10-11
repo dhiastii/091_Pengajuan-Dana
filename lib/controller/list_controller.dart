@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pengajuan_dana/model/list_model.dart';
 
 class ListController {
+  ///menghubungkan aplikasi dengan firebase dan collection pengajuan
   final listCollection = FirebaseFirestore.instance.collection('pengajuan');
 
   final StreamController<List<DocumentSnapshot>> streamController =
@@ -10,15 +11,18 @@ class ListController {
 
   Stream<List<DocumentSnapshot>> get stream => streamController.stream;
 
-  //add contact
+  ///add list pengajuan
   Future addList(ListModel lsmodel) async {
-    //convert ContactModel ke map buat dihandle firestore sebagai json type
+    ///convert ListModel ke map buat dihandle firestore sebagai json type
     final list = lsmodel.toMap();
-    //add contasct ke collection dan get document reference
+
+    ///add list pengajuan ke collection dan get document reference
     final DocumentReference docRef = await listCollection.add(list);
-    //get document id buat contact yang baru ditambah
+
+    ///get document id buat list yang baru ditambah
     final String docId = docRef.id;
-    //create new ContactModel pakai document id
+
+    ///create new ListModel pakai document id
     final ListModel listModel = ListModel(
         id: docId,
         namak: lsmodel.namak,
@@ -28,9 +32,11 @@ class ListController {
         pdf: lsmodel.pdf,
         status: lsmodel.status);
 
+    ///mengupdate data yang diinputan
     await docRef.update(listModel.toMap());
   }
 
+  ///update list pengajuan
   Future updateList(ListModel lsmodel) async {
     final ListModel listModel = ListModel(
         id: lsmodel.id,
@@ -41,15 +47,21 @@ class ListController {
         pdf: lsmodel.pdf,
         status: lsmodel.status);
 
+    ///mengambil data dari listCollection, mencari id yang sama, lalu update datanya
     await listCollection.doc(lsmodel.id).update(listModel.toMap());
+
+    ///memanggil data list
     await getList();
   }
 
+  ///menghapus list pengajuan
   Future removeList(String id) async {
+    ///mengambil data dari listCollection dan id yang sama, lalu delete
     await listCollection.doc(id).delete();
     await getList();
   }
 
+  ///memanggil list
   Future getList() async {
     final list = await listCollection.get();
     streamController.add(list.docs);

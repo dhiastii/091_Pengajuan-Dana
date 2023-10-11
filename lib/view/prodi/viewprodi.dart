@@ -26,6 +26,7 @@ class _ViewProdiState extends State<ViewProdi> {
     _fetchData();
   }
 
+  /// Fungsi untuk mengambil data pengajuan dari Firestore
   Future<void> _fetchData() async {
     try {
       final snapshot =
@@ -52,6 +53,7 @@ class _ViewProdiState extends State<ViewProdi> {
     }
   }
 
+  /// Fungsi untuk menavigasi ke halaman Keputusan dengan data pengajuan
   void _navigateToKeputusan(Map<String, dynamic> pengajuan) {
     Navigator.push(
       context,

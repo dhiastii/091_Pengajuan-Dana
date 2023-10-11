@@ -33,11 +33,12 @@ class _KeputusanState extends State<Keputusan> {
       status = newStatus;
     });
 
-    // Simpan status ke Firestore
+    /// Simpan status ke Firestore
     FirebaseFirestore.instance
         .collection('pengajuan')
-        .doc(widget
-            .id) // Gunakan field unik sebagai ID dokumen (misalnya, namaKegiatan)
+        .doc(widget.id)
+
+        /// Gunakan field unik sebagai ID dokumen (misalnya, namaKegiatan)
         .update({'status': newStatus}).then((value) {
       print('Status berhasil diperbarui');
     }).catchError((error) {
@@ -78,9 +79,11 @@ class _KeputusanState extends State<Keputusan> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Colors.blue, // Warna biru
+            color: Colors.blue,
           ),
-          padding: EdgeInsets.all(10), // Padding di dalam kotak
+          padding: EdgeInsets.all(10),
+
+          /// Padding di dalam kotak
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -108,8 +111,9 @@ class _KeputusanState extends State<Keputusan> {
                 'Status: $status',
                 style: const TextStyle(fontSize: 24),
               ),
-              const SizedBox(
-                  height: 10), // Memberikan jarak antara teks status dan button
+              const SizedBox(height: 10),
+
+              /// Memberikan jarak antara teks status dan button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -123,8 +127,9 @@ class _KeputusanState extends State<Keputusan> {
                           ));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.green, // Warna latar belakang hijau
+                      backgroundColor: Colors.green,
+
+                      /// Warna latar belakang hijau
                     ),
                     child: const Text('Terima'),
                   ),
@@ -138,7 +143,9 @@ class _KeputusanState extends State<Keputusan> {
                           ));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red, // Warna latar belakang merah
+                      backgroundColor: Colors.red,
+
+                      /// Warna latar belakang merah
                     ),
                     child: const Text('Tolak'),
                   ),

@@ -26,7 +26,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
 
   final formkey = GlobalKey<FormState>();
 
-  //final List<DocumentSnapshot> data = snapshot.data!;
+  ///final List<DocumentSnapshot> data = snapshot.data!;
 
   String? newnamak;
   String? newtgl;
@@ -70,6 +70,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
           child: Column(
             children: [
               TextFormField(
+                ///membuat teks input untuk nama
                 decoration: const InputDecoration(hintText: 'Nama Kegiatan : '),
                 onSaved: (value) {
                   newnamak = value;
@@ -77,6 +78,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
                 initialValue: widget.namak,
               ),
               TextFormField(
+                ///membuat teks input untuk tanggal
                 decoration:
                     const InputDecoration(hintText: 'Tanggal Kegiatan : '),
                 onSaved: (value) {
@@ -85,6 +87,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
                 initialValue: widget.tgl,
               ),
               TextFormField(
+                ///membuat teks input untuk deskripsi
                 decoration:
                     const InputDecoration(hintText: 'Deksripsi Kegiatan : '),
                 onSaved: (value) {
@@ -93,6 +96,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
                 initialValue: widget.desk,
               ),
               TextFormField(
+                ///membuat teks input untuk dana
                 decoration:
                     const InputDecoration(hintText: 'Pengajuan Dana : Rp'),
                 onSaved: (value) {
@@ -101,19 +105,25 @@ class _EditPengajuanState extends State<EditPengajuan> {
                 initialValue: widget.dana,
               ),
               ElevatedButton(
+                /// edit data begin
                 onPressed: () async {
                   if (formkey.currentState!.validate()) {
                     formkey.currentState!.save();
+
+                    ///mengisi data untuk diedit
                     ListModel ls = ListModel(
                         dana: newdana!,
                         desk: newdesk!,
                         namak: newnamak!,
                         tgl: newtgl!,
                         id: widget.id);
+
+                    ///mengedit list pada controller
                     listController.updateList(ls);
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Pengajuan berhasil di update')));
 
+                    ///navigasi ke halaman ListPengajuan jika menekan button 'tambah proposal'zc jika menekan button 'edit pengajuan'
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -121,6 +131,7 @@ class _EditPengajuanState extends State<EditPengajuan> {
                       ),
                     );
                   } else {
+                    ///navigasi ke halaman ListPengajuan dengan snackbar gagal update
                     Text('Gagal Update');
                     Navigator.push(
                         context,
